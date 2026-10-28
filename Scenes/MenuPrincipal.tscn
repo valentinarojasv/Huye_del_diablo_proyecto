@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cms1celj4430"]
+
+[ext_resource type="Texture2D" uid="uid://rtancpkkpmio" path="res://assets/final/Menu.png" id="1_bt1tr"]
+[ext_resource type="Texture2D" uid="uid://unhm8idialpv" path="res://assets/final/Titulo.png" id="2_l10t8"]
+[ext_resource type="Texture2D" uid="uid://eqlwmqkbtd35" path="res://assets/final/btnjugar.png" id="3_8kh3b"]
+[ext_resource type="FontFile" uid="uid://db4d2g4m3t0t7" path="res://assets/final/fonts/MetalMania-Regular.ttf" id="4_l10t8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg33y"]
+bg_color = Color(0.70980394, 0.02745098, 0.047058824, 1)
+corner_detail = 6
+
+[node name="MenuPrincipal" type="Control" unique_id=1700587228]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="fondo" type="TextureRect" parent="." unique_id=1929009545]
+layout_mode = 0
+offset_right = 1277.0
+offset_bottom = 715.0
+texture = ExtResource("1_bt1tr")
+expand_mode = 1
+
+[node name="titulo" type="TextureRect" parent="." unique_id=25667902]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 12.0
+offset_right = 548.0
+offset_bottom = 174.0
+texture = ExtResource("2_l10t8")
+expand_mode = 1
+
+[node name="BotonJugar" type="Button" parent="." unique_id=1102951027]
+layout_mode = 0
+offset_left = 752.0
+offset_top = 594.0
+offset_right = 1038.0
+offset_bottom = 700.0
+icon = ExtResource("3_8kh3b")
+flat = true
+expand_icon = true
+
+[node name="MejorPuntaje" type="Label" parent="." unique_id=1521404505]
+layout_mode = 0
+offset_left = 814.0
+offset_top = 578.0
+offset_right = 972.0
+offset_bottom = 605.0
+theme_override_fonts/font = ExtResource("4_l10t8")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxFlat_sg33y")
+text = "MEJOR TIEMPO: 0 s"
