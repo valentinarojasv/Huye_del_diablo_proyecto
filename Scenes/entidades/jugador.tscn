@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://qj0b3iu227eo"]
+
+[ext_resource type="Script" uid="uid://b601q76ckgmkk" path="res://Scripts/jugador.gd" id="1_gynp0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sg33y"]
+radius = 16.0
+
+[node name="Jugador" type="CharacterBody2D" unique_id=358537819]
+script = ExtResource("1_gynp0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2093107038]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1566444826]
+shape = SubResource("CircleShape2D_sg33y")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=121451303]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=959985640]

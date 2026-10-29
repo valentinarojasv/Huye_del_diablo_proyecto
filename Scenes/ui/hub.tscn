@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://kgfo670vpa1o"]
+
+[ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="1_w4rgr"]
+
+[node name="HUB" type="Control" unique_id=941967587]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IndicadorVidas" type="Label" parent="." unique_id=1456036554]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 90.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("1_w4rgr")
+text = "VIDAS: 3"
+
+[node name="IndicadorTiempo" type="Label" parent="." unique_id=944331117]
+layout_mode = 0
+offset_left = 580.0
+offset_top = 20.0
+offset_right = 667.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("1_w4rgr")
+text = "TIEMPO: 0 S"
+
+[node name="BarraTurbo" type="ProgressBar" parent="." unique_id=736219764]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 65.0
+offset_right = 250.0
+offset_bottom = 92.0
+value = 100.0
