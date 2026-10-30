@@ -2,11 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cgn8tqcd1y22v" path="res://Scripts/juego.gd" id="1_dvfph"]
 [ext_resource type="PackedScene" uid="uid://qj0b3iu227eo" path="res://Scenes/entidades/jugador.tscn" id="2_wbnfm"]
-[ext_resource type="Resource" uid="uid://dpxjwpe1opqn0" path="res://resources/configuracion_jugador.tres" id="3_p2ibf"]
 [ext_resource type="PackedScene" uid="uid://kgfo670vpa1o" path="res://Scenes/ui/hub.tscn" id="4_p2ibf"]
 [ext_resource type="Script" uid="uid://c5f4e30oavgou" path="res://Scripts/hub.gd" id="5_gr0cm"]
+[ext_resource type="PackedScene" uid="uid://ctgarateobyxw" path="res://Scenes/entidades/diablo.tscn" id="5_ho3tb"]
 
 [sub_resource type="TileSet" id="TileSet_dvfph"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_dx8dx"]
+vertices = PackedVector2Array(1267.0078, 708, 6.0703125, 708, 10.9296875, 6.9765625, 1267.9766, 5.0078125)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 1278, -5, 1277, 718, -4, 718)])
 
 [node name="Juego" type="Node2D" unique_id=1304233476]
 script = ExtResource("1_dvfph")
@@ -18,11 +23,20 @@ tile_set = SubResource("TileSet_dvfph")
 
 [node name="Obstaculos" type="Node2D" parent="Escenario" unique_id=1070859820]
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Escenario" unique_id=322523074]
+navigation_polygon = SubResource("NavigationPolygon_dx8dx")
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="Escenario" unique_id=1223879345]
+navigation_polygon = SubResource("NavigationPolygon_dx8dx")
+
 [node name="Jugador" parent="." unique_id=358537819 instance=ExtResource("2_wbnfm")]
-configuracion = ExtResource("3_p2ibf")
+position = Vector2(-2, 4)
 
 [node name="HUB" parent="." unique_id=941967587 instance=ExtResource("4_p2ibf")]
 script = ExtResource("5_gr0cm")
 
 [node name="Cronometro" type="Timer" parent="." unique_id=185695287]
 autostart = true
+
+[node name="Diablo" parent="." unique_id=226193950 instance=ExtResource("5_ho3tb")]
+position = Vector2(900, 360)

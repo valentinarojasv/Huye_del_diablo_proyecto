@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ConfiguracionDiablo" format=3 uid="uid://c85nxrr61vysi"]
+
+[ext_resource type="Script" uid="uid://bnbpqrlyvfn2k" path="res://resources/configuracion_diablo.gd" id="1_imw2f"]
+
+[resource]
+script = ExtResource("1_imw2f")
+metadata/_custom_type_script = "uid://bnbpqrlyvfn2k"

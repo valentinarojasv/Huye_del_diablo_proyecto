@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ctgarateobyxw"]
+
+[ext_resource type="Script" uid="uid://dl2arrndccp54" path="res://Scripts/diablo.gd" id="1_238n2"]
+[ext_resource type="Resource" uid="uid://c85nxrr61vysi" path="res://resources/configuracion_diablo.tres" id="2_oc3nh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f6pym"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
+size = Vector2(80, 30)
+
+[node name="Diablo" type="CharacterBody2D" unique_id=226193950]
+script = ExtResource("1_238n2")
+configuracion = ExtResource("2_oc3nh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=457149770]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230592265]
+shape = SubResource("CircleShape2D_f6pym")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=254794997]
+path_desired_distance = 4.0
+target_desired_distance = 16.0
+avoidance_enabled = true
+radius = 16.0
+
+[node name="Latigo" type="Area2D" parent="." unique_id=412469535]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Latigo" unique_id=1368316057]
+position = Vector2(40, 0)
+shape = SubResource("RectangleShape2D_f6pym")
+disabled = true
+
+[node name="AdvertenciaAtaque" type="Polygon2D" parent="." unique_id=913873604]
+visible = false
+
+[connection signal="body_entered" from="Latigo" to="." method="_on_latigo_body_entered"]

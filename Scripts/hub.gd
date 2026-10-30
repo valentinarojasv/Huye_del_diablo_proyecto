@@ -13,11 +13,17 @@ func _ready() -> void:
 		_actualizar_barra_turbo
 	)
 
+	jugador.vidas_cambiadas.connect(
+		_actualizar_vidas
+	)
+
 	if jugador.configuracion != null:
 		_actualizar_barra_turbo(
 			jugador.energia_turbo,
 			jugador.configuracion.energia_maxima
 		)
+
+	_actualizar_vidas(jugador.vidas_actuales)
 
 	juego.tiempo_actualizado.connect(_actualizar_tiempo)
 	_actualizar_tiempo(juego.tiempo_supervivencia)
@@ -29,6 +35,10 @@ func _actualizar_barra_turbo(
 ) -> void:
 	barra_turbo.max_value = energia_maxima
 	barra_turbo.value = energia_actual
+
+
+func _actualizar_vidas(vidas_actuales: int) -> void:
+	indicador_vidas.text = "VIDAS: %d" % vidas_actuales
 
 
 func _actualizar_tiempo(segundos: int) -> void:

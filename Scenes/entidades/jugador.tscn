@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://qj0b3iu227eo"]
 
 [ext_resource type="Script" uid="uid://b601q76ckgmkk" path="res://Scripts/jugador.gd" id="1_gynp0"]
+[ext_resource type="Resource" uid="uid://dpxjwpe1opqn0" path="res://resources/configuracion_jugador.tres" id="2_xayr5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sg33y"]
 radius = 16.0
 
-[node name="Jugador" type="CharacterBody2D" unique_id=358537819]
+[node name="Jugador" type="CharacterBody2D" unique_id=358537819 groups=["jugador"]]
 script = ExtResource("1_gynp0")
+configuracion = ExtResource("2_xayr5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2093107038]
 

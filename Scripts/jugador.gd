@@ -3,11 +3,22 @@ extends CharacterBody2D
 @export var configuracion: ConfiguracionJugador
 
 signal energia_turbo_cambiada(energia_actual: float, energia_maxima: float)
+signal vidas_cambiadas(vidas_actuales: int)
+signal jugador_derrotado
+
+@onready var sprite: Sprite2D = $Sprite2D
 
 var energia_turbo: float = 100.0
 var turbo_activo: bool = false
 var turbo_bloqueado: bool = false
 var tiempo_sin_turbo: float = 0.0
+
+var vidas_actuales: int = 3
+var invulnerable: bool = false
+var tiempo_invulnerabilidad: float = 0.0
+
+const INTERVALO_PARPADEO: float = 0.1
+var tiempo_parpadeo: float = 0.0
 
 
 func _ready() -> void:
@@ -17,15 +28,39 @@ func _ready() -> void:
 		return
 
 	energia_turbo = configuracion.energia_maxima
+	vidas_actuales = configuracion.vidas_iniciales
+
+	sprite.visible = true
+
 	energia_turbo_cambiada.emit(
 		energia_turbo,
 		configuracion.energia_maxima
 	)
 
+	vidas_cambiadas.emit(vidas_actuales)
+
 
 func _physics_process(delta: float) -> void:
+	actualizar_invulnerabilidad(delta)
 	actualizar_turbo(delta)
 	actualizar_movimiento()
+
+
+func actualizar_invulnerabilidad(delta: float) -> void:
+	if not invulnerable:
+		return
+
+	tiempo_invulnerabilidad -= delta
+	tiempo_parpadeo -= delta
+
+	if tiempo_parpadeo <= 0.0:
+		sprite.visible = not sprite.visible
+		tiempo_parpadeo = INTERVALO_PARPADEO
+
+	if tiempo_invulnerabilidad <= 0.0:
+		tiempo_invulnerabilidad = 0.0
+		invulnerable = false
+		sprite.visible = true
 
 
 func actualizar_turbo(delta: float) -> void:
@@ -86,3 +121,19 @@ func actualizar_movimiento() -> void:
 	velocity = direccion * velocidad_actual
 
 	move_and_slide()
+
+
+func recibir_dano() -> void:
+	if invulnerable or vidas_actuales <= 0:
+		return
+
+	vidas_actuales -= 1
+	vidas_cambiadas.emit(vidas_actuales)
+
+	if vidas_actuales <= 0:
+		jugador_derrotado.emit()
+		return
+
+	invulnerable = true
+	tiempo_invulnerabilidad = configuracion.duracion_invulnerabilidad
+	tiempo_parpadeo = 0.0
