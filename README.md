@@ -1,68 +1,77 @@
 # Huye del Diablo
 
-Videojuego arcade 2D desarrollado en Godot 4, inspirado en las mascaradas tradicionales de Costa Rica.
+Huye del Diablo es un videojuego 2D desarrollado en Godot 4.x, inspirado en las mascaradas tradicionales de Costa Rica.
 
-## Descripción
+El objetivo es sobrevivir el mayor tiempo posible mientras un diablo persigue al jugador e intenta golpearlo con su látigo.
 
-El jugador debe escapar de un diablo de mascarada que lo persigue por una plaza costarricense e intenta golpearlo con su látigo.
+## Información del proyecto
 
-El objetivo es sobrevivir el mayor tiempo posible, esquivar ataques y utilizar el turbo para escapar. La dificultad aumenta progresivamente.
+- **Motor:** Godot 4.x
+- **Lenguaje:** GDScript
+- **Resolución:** 1280 × 720
+- **Género:** Supervivencia y persecución 2D
+- **Plataforma objetivo:** Web y dispositivos móviles
+- **Estado:** En desarrollo
 
-## Características del juego
+## Controles actuales
 
-- Género: Arcade de persecución y supervivencia.
-- Perspectiva: 2D, vista superior (Top-down).
-- Movimiento en 8 direcciones.
-- Controles de teclado y joystick virtual.
-- Sistema de 3 vidas.
-- Turbo con energía limitada.
-- Inteligencia artificial de persecución.
-- Ataques de látigo.
-- Dificultad progresiva.
-- Sistema de puntuación y récord.
-- Compatibilidad con escritorio y dispositivos móviles.
+| Acción | Control |
+|---|---|
+| Movimiento | WASD o flechas |
+| Turbo | Shift o espacio |
+| Iniciar partida | Botón JUGAR |
 
-## Tecnologías utilizadas
+## Funcionalidades implementadas
 
-- Godot 4.x
-- GDScript
-- Git
-- GitHub
+- Menú principal con botón JUGAR.
+- Movimiento del jugador en ocho direcciones.
+- Sistema de turbo con consumo y regeneración de energía.
+- HUD con indicador de vidas, energía y tiempo.
+- Sistema de tres vidas.
+- Invulnerabilidad temporal después de recibir daño.
+- Persecución del diablo mediante NavigationAgent2D.
+- Sistema de ataques con látigo.
+- Advertencia visual antes de cada ataque.
+- Sonidos de advertencia y latigazo.
+- Incremento progresivo de la dificultad.
+- Destello rojo al recibir daño.
+- Sacudida de cámara.
+- Finalización de la partida al perder todas las vidas.
+- Pantalla Game Over con tiempo de supervivencia.
+- Recursos editables para configurar los valores del jugador y del diablo.
 
-## Configuración técnica
+## Funcionalidades pendientes
 
-- Resolución: 1280 × 720.
-- Renderizador: Compatibility.
-- Escalado: canvas_items / keep.
-- Orientación: Landscape.
-- Exportación: HTML5.
-- Rendimiento objetivo: 60 FPS en Chrome.
+- Corregir la visualización del fondo de Game Over.
+- Implementar el botón para reiniciar la partida.
+- Completar el escenario y sus obstáculos.
+- Incorporar los gráficos definitivos del jugador y del diablo.
+- Implementar el joystick virtual y los controles táctiles.
+- Incorporar los efectos visuales pendientes.
+- Implementar la embestida del diablo en la última fase.
+- Guardar y mostrar el mejor tiempo de supervivencia.
+- Implementar el sistema de pausa.
+- Configurar la exportación web.
+- Realizar pruebas de compatibilidad y rendimiento.
 
-## Progreso del desarrollo
+## Estructura del proyecto
 
-### Configuración inicial
-- [x] Creación del proyecto en Godot 4.
-- [x] Configuración de resolución y renderizador.
-- [x] Configuración de escalado y orientación.
-- [x] Activación de Emulate Mouse From Touch.
-- [x] Organización de carpetas.
+- `Scenes/`: Escenas del menú, juego, personajes e interfaces.
+- `Scripts/`: Código GDScript.
+- `resources/`: Configuraciones editables.
+- `assets/`: Recursos gráficos.
+- `audio/`: Archivos de sonido.
+- `autoload/`: Carpeta para sistemas globales.
 
-### Menú principal
-- [x] Creación de MenuPrincipal.tscn.
-- [x] Incorporación del fondo.
-- [x] Diseño e integración del logotipo.
-- [x] Diseño e integración del botón JUGAR.
-- [x] Importación de recursos gráficos.
-- [x] Organización de tipografías.
-- [ ] Implementación del mejor puntaje.
-- [ ] Programación del botón JUGAR.
+## Cómo ejecutar el proyecto
 
-### Control de versiones
-- [x] Inicialización de Git.
-- [x] Configuración de .gitignore.
-- [x] Vinculación con GitHub.
-- [x] Primer commit y push.
+1. Descargar o clonar el repositorio.
+2. Abrir Godot 4.x.
+3. Importar el archivo `project.godot`.
+4. Ejecutar el proyecto desde el editor.
 
 ## Estado actual
 
-**En desarrollo.**
+El juego cuenta con los sistemas principales de movimiento, turbo, persecución, ataques, vidas y cronómetro.
+
+Actualmente se continúa trabajando en la interfaz, el escenario y las funcionalidades necesarias para completar el proyecto.
