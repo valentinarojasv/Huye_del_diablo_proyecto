@@ -5,6 +5,7 @@ extends CharacterBody2D
 signal energia_turbo_cambiada(energia_actual: float, energia_maxima: float)
 signal vidas_cambiadas(vidas_actuales: int)
 signal jugador_derrotado
+signal dano_recibido
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -82,6 +83,7 @@ func actualizar_turbo(delta: float) -> void:
 			energia_turbo = 0.0
 			turbo_activo = false
 			turbo_bloqueado = true
+
 	else:
 		tiempo_sin_turbo += delta
 
@@ -119,7 +121,6 @@ func actualizar_movimiento() -> void:
 		velocidad_actual = configuracion.velocidad_turbo
 
 	velocity = direccion * velocidad_actual
-
 	move_and_slide()
 
 
@@ -128,7 +129,11 @@ func recibir_dano() -> void:
 		return
 
 	vidas_actuales -= 1
+
 	vidas_cambiadas.emit(vidas_actuales)
+
+	# Avisar al juego que el jugador recibió un golpe.
+	dano_recibido.emit()
 
 	if vidas_actuales <= 0:
 		jugador_derrotado.emit()

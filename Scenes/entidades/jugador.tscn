@@ -18,3 +18,10 @@ shape = SubResource("CircleShape2D_sg33y")
 [node name="Hurtbox" type="Area2D" parent="." unique_id=121451303]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=959985640]
+
+[node name="CamaraJugador" type="Camera2D" parent="." unique_id=1873883296]
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 720
+position_smoothing_enabled = true

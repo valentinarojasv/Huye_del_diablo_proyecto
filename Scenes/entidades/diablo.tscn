@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dl2arrndccp54" path="res://Scripts/diablo.gd" id="1_238n2"]
 [ext_resource type="Resource" uid="uid://c85nxrr61vysi" path="res://resources/configuracion_diablo.tres" id="2_oc3nh"]
+[ext_resource type="AudioStream" uid="uid://d1po6g4eick27" path="res://audio/SonidoAdvertencia.ogg" id="3_o4lch"]
+[ext_resource type="AudioStream" uid="uid://w6vg7wl5mt5w" path="res://audio/Latigazo.ogg" id="4_ma3lj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f6pym"]
 radius = 16.0
@@ -33,5 +35,14 @@ disabled = true
 
 [node name="AdvertenciaAtaque" type="Polygon2D" parent="." unique_id=913873604]
 visible = false
+color = Color(1, 0, 0, 0.39215687)
+polygon = PackedVector2Array(0, -15, 80, -15, 80, 15, 0, 15)
+uv = PackedVector2Array(0, -15, 80, -15, 80, 15, 0, 15)
+
+[node name="SonidoAdvertencia" type="AudioStreamPlayer2D" parent="." unique_id=936661488]
+stream = ExtResource("3_o4lch")
+
+[node name="SonidoLatigazo" type="AudioStreamPlayer2D" parent="." unique_id=1508690972]
+stream = ExtResource("4_ma3lj")
 
 [connection signal="body_entered" from="Latigo" to="." method="_on_latigo_body_entered"]

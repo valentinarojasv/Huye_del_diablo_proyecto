@@ -12,6 +12,9 @@ enum Estado {
 @onready var agente_navegacion: NavigationAgent2D = $NavigationAgent2D
 @onready var latigo: Area2D = $Latigo
 @onready var colision_latigo: CollisionShape2D = $Latigo/CollisionShape2D
+@onready var advertencia_ataque: Polygon2D = $AdvertenciaAtaque
+@onready var sonido_advertencia: AudioStreamPlayer2D = $SonidoAdvertencia
+@onready var sonido_latigazo: AudioStreamPlayer2D = $SonidoLatigazo
 
 const DISTANCIA_ATAQUE: float = 85.0
 
@@ -42,6 +45,7 @@ func _ready() -> void:
 	agente_navegacion.target_desired_distance = 16.0
 
 	colision_latigo.disabled = true
+	advertencia_ataque.visible = false
 
 
 func _physics_process(delta: float) -> void:
@@ -50,6 +54,7 @@ func _physics_process(delta: float) -> void:
 
 	if not is_instance_valid(jugador):
 		velocity = Vector2.ZERO
+		advertencia_ataque.visible = false
 		return
 
 	match estado_actual:
@@ -71,23 +76,38 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 	tiempo_estado = 0.0
 
 	velocity = Vector2.ZERO
+	advertencia_ataque.visible = false
 
-	if nuevo_estado == Estado.ANUNCIAR:
-		direccion_ataque = global_position.direction_to(
-			jugador.global_position
-		)
+	match nuevo_estado:
+		Estado.PERSEGUIR:
+			pass
 
-		if direccion_ataque == Vector2.ZERO:
-			direccion_ataque = Vector2.RIGHT
+		Estado.ANUNCIAR:
+			direccion_ataque = global_position.direction_to(
+				jugador.global_position
+			)
 
-		latigo.rotation = direccion_ataque.angle()
+			if direccion_ataque == Vector2.ZERO:
+				direccion_ataque = Vector2.RIGHT
 
-	if nuevo_estado == Estado.LATIGAZO:
-		jugador_golpeado_en_ataque = false
-		colision_latigo.set_deferred("disabled", false)
+			latigo.rotation = direccion_ataque.angle()
+			advertencia_ataque.rotation = direccion_ataque.angle()
+			advertencia_ataque.visible = true
 
-	if nuevo_estado == Estado.RECUPERAR:
-		colision_latigo.set_deferred("disabled", true)
+			# Sonido de advertencia.
+			if sonido_advertencia.stream != null:
+				sonido_advertencia.play()
+
+		Estado.LATIGAZO:
+			jugador_golpeado_en_ataque = false
+			colision_latigo.set_deferred("disabled", false)
+
+			# Sonido del latigazo al ejecutar el ataque.
+			if sonido_latigazo.stream != null:
+				sonido_latigazo.play()
+
+		Estado.RECUPERAR:
+			colision_latigo.set_deferred("disabled", true)
 
 
 func actualizar_persecucion() -> void:
@@ -115,7 +135,6 @@ func actualizar_persecucion() -> void:
 	)
 
 	velocity = direccion * obtener_velocidad_actual()
-
 	move_and_slide()
 
 
