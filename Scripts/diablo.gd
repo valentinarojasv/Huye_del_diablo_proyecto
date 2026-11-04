@@ -6,17 +6,27 @@ enum Estado {
 	PERSEGUIR,
 	ANUNCIAR,
 	LATIGAZO,
-	RECUPERAR
+	RECUPERAR,
+	PREPARAR_EMBESTIDA,
+	EMBESTIR
 }
 
 @onready var agente_navegacion: NavigationAgent2D = $NavigationAgent2D
 @onready var latigo: Area2D = $Latigo
 @onready var colision_latigo: CollisionShape2D = $Latigo/CollisionShape2D
 @onready var advertencia_ataque: Polygon2D = $AdvertenciaAtaque
-@onready var sonido_advertencia: AudioStreamPlayer2D = $SonidoAdvertencia
-@onready var sonido_latigazo: AudioStreamPlayer2D = $SonidoLatigazo
+@onready var advertencia_embestida: Polygon2D = $AdvertenciaEmbestida
+@onready var estela_embestida: GPUParticles2D = $EstelaEmbestida
 
 const DISTANCIA_ATAQUE: float = 85.0
+
+const TIEMPO_ACTIVACION_EMBESTIDA: float = 45.0
+const INTERVALO_EMBESTIDA: float = 10.0
+const DURACION_PREPARACION_EMBESTIDA: float = 0.8
+const DURACION_EMBESTIDA: float = 0.6
+const VELOCIDAD_EMBESTIDA: float = 650.0
+
+const TIEMPO_EXTRA_ADVERTENCIA: float = 3.0
 
 var jugador: CharacterBody2D
 var tiempo_partida: float = 0.0
@@ -26,6 +36,13 @@ var tiempo_estado: float = 0.0
 var direccion_ataque: Vector2 = Vector2.RIGHT
 
 var jugador_golpeado_en_ataque: bool = false
+
+var tiempo_ultima_embestida: float = 0.0
+var direccion_embestida: Vector2 = Vector2.RIGHT
+
+var jugador_en_zona_advertencia: bool = false
+var advertencia_sonando: bool = false
+var tiempo_fuera_advertencia: float = 0.0
 
 
 func _ready() -> void:
@@ -46,6 +63,8 @@ func _ready() -> void:
 
 	colision_latigo.disabled = true
 	advertencia_ataque.visible = false
+	advertencia_embestida.visible = false
+	estela_embestida.emitting = false
 
 
 func _physics_process(delta: float) -> void:
@@ -55,6 +74,9 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(jugador):
 		velocity = Vector2.ZERO
 		advertencia_ataque.visible = false
+		advertencia_embestida.visible = false
+		estela_embestida.emitting = false
+		detener_advertencia()
 		return
 
 	match estado_actual:
@@ -70,6 +92,14 @@ func _physics_process(delta: float) -> void:
 		Estado.RECUPERAR:
 			actualizar_recuperacion()
 
+		Estado.PREPARAR_EMBESTIDA:
+			actualizar_preparacion_embestida()
+
+		Estado.EMBESTIR:
+			actualizar_embestida()
+
+	actualizar_sonido_advertencia(delta)
+
 
 func cambiar_estado(nuevo_estado: Estado) -> void:
 	estado_actual = nuevo_estado
@@ -77,6 +107,8 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 
 	velocity = Vector2.ZERO
 	advertencia_ataque.visible = false
+	advertencia_embestida.visible = false
+	estela_embestida.emitting = false
 
 	match nuevo_estado:
 		Estado.PERSEGUIR:
@@ -94,23 +126,39 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 			advertencia_ataque.rotation = direccion_ataque.angle()
 			advertencia_ataque.visible = true
 
-			# Sonido de advertencia.
-			if sonido_advertencia.stream != null:
-				sonido_advertencia.play()
-
 		Estado.LATIGAZO:
 			jugador_golpeado_en_ataque = false
 			colision_latigo.set_deferred("disabled", false)
 
-			# Sonido del latigazo al ejecutar el ataque.
-			if sonido_latigazo.stream != null:
-				sonido_latigazo.play()
-
 		Estado.RECUPERAR:
 			colision_latigo.set_deferred("disabled", true)
 
+		Estado.PREPARAR_EMBESTIDA:
+			direccion_embestida = global_position.direction_to(
+				jugador.global_position
+			)
+
+			if direccion_embestida == Vector2.ZERO:
+				direccion_embestida = Vector2.RIGHT
+
+			advertencia_embestida.rotation = direccion_embestida.angle()
+			advertencia_embestida.visible = true
+
+			detener_advertencia()
+
+		Estado.EMBESTIR:
+			tiempo_ultima_embestida = tiempo_partida
+			estela_embestida.emitting = true
+
+			detener_advertencia()
+			GestorAudio.reproducir_sonido("embestida")
+
 
 func actualizar_persecucion() -> void:
+	if puede_embestir():
+		cambiar_estado(Estado.PREPARAR_EMBESTIDA)
+		return
+
 	var distancia: float = global_position.distance_to(
 		jugador.global_position
 	)
@@ -145,6 +193,47 @@ func actualizar_anuncio() -> void:
 		cambiar_estado(Estado.LATIGAZO)
 
 
+func actualizar_sonido_advertencia(delta: float) -> void:
+	var dentro_zona: bool = false
+
+	if estado_actual == Estado.ANUNCIAR and advertencia_ataque.visible:
+		var posicion_local: Vector2 = advertencia_ataque.to_local(
+			jugador.global_position
+		)
+
+		dentro_zona = Geometry2D.is_point_in_polygon(
+			posicion_local,
+			advertencia_ataque.polygon
+		)
+
+	if dentro_zona:
+		tiempo_fuera_advertencia = 0.0
+
+		if not jugador_en_zona_advertencia:
+			jugador_en_zona_advertencia = true
+
+			if not advertencia_sonando:
+				GestorAudio.reproducir_sonido("advertencia")
+				advertencia_sonando = true
+
+	else:
+		jugador_en_zona_advertencia = false
+
+		if advertencia_sonando:
+			tiempo_fuera_advertencia += delta
+
+			if tiempo_fuera_advertencia >= TIEMPO_EXTRA_ADVERTENCIA:
+				detener_advertencia()
+
+
+func detener_advertencia() -> void:
+	GestorAudio.detener_advertencia()
+
+	advertencia_sonando = false
+	jugador_en_zona_advertencia = false
+	tiempo_fuera_advertencia = 0.0
+
+
 func actualizar_latigazo() -> void:
 	velocity = Vector2.ZERO
 
@@ -157,6 +246,31 @@ func actualizar_recuperacion() -> void:
 
 	if tiempo_estado >= obtener_tiempo_recuperacion():
 		cambiar_estado(Estado.PERSEGUIR)
+
+
+func puede_embestir() -> bool:
+	if tiempo_partida < TIEMPO_ACTIVACION_EMBESTIDA:
+		return false
+
+	if tiempo_partida - tiempo_ultima_embestida < INTERVALO_EMBESTIDA:
+		return false
+
+	return true
+
+
+func actualizar_preparacion_embestida() -> void:
+	velocity = Vector2.ZERO
+
+	if tiempo_estado >= DURACION_PREPARACION_EMBESTIDA:
+		cambiar_estado(Estado.EMBESTIR)
+
+
+func actualizar_embestida() -> void:
+	velocity = direccion_embestida * VELOCIDAD_EMBESTIDA
+	move_and_slide()
+
+	if tiempo_estado >= DURACION_EMBESTIDA:
+		cambiar_estado(Estado.RECUPERAR)
 
 
 func obtener_velocidad_actual() -> float:

@@ -1,44 +1,65 @@
 [gd_scene format=3 uid="uid://dsqlmvamha0my"]
 
 [ext_resource type="Script" uid="uid://dj0kyj55wgabt" path="res://Scripts/fin_juego.gd" id="1_bshie"]
-[ext_resource type="Texture2D" uid="uid://cr3yuybn1rvhf" path="res://assets/final/Menugameover.png" id="1_lon1h"]
+[ext_resource type="Texture2D" uid="uid://eaqqhn1ut0i3" path="res://assets/final/Gameovermenu.png" id="2_bshie"]
 [ext_resource type="Texture2D" uid="uid://opse0iodnmee" path="res://assets/final/GAMEOVER.png" id="2_pwpxn"]
 [ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="4_60wl0"]
+[ext_resource type="Texture2D" uid="uid://xpx7813k5seg" path="res://assets/final/btnreintentar.png" id="5_aahof"]
+[ext_resource type="Texture2D" uid="uid://bsfw0vpem86es" path="res://assets/final/btnprincipal.png" id="6_ovgy0"]
 
-[node name="FinJuego" type="Control" unique_id=975219571]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="FinJuego" type="CanvasLayer" unique_id=891965814]
+process_mode = 3
+layer = 10
 script = ExtResource("1_bshie")
 
-[node name="FondoGameOver" type="TextureRect" parent="." unique_id=201977161]
-layout_mode = 1
+[node name="FondoGameOver" type="TextureRect" parent="." unique_id=971985997]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_lon1h")
+texture = ExtResource("2_bshie")
 expand_mode = 1
 
 [node name="TituloGameOver" type="TextureRect" parent="." unique_id=1104744056]
-layout_mode = 0
-offset_left = 365.0
-offset_top = 8.0
-offset_right = 880.0
-offset_bottom = 231.0
+offset_left = 324.0
+offset_right = 988.0
+offset_bottom = 529.0
 texture = ExtResource("2_pwpxn")
 expand_mode = 1
 
 [node name="TiempoSupervivencia" type="Label" parent="." unique_id=1939397841]
-layout_mode = 0
-offset_left = 477.0
-offset_top = 249.0
-offset_right = 772.0
-offset_bottom = 281.0
+offset_left = 451.0
+offset_top = 251.0
+offset_right = 864.0
+offset_bottom = 295.0
 theme_override_fonts/font = ExtResource("4_60wl0")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 35
 text = "TIEMPO SOBREVIVIDO: 0 S"
+
+[node name="MejorPuntuacion" type="Label" parent="." unique_id=1104731391]
+offset_left = 490.0
+offset_top = 344.0
+offset_right = 847.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("4_60wl0")
+theme_override_font_sizes/font_size = 35
+text = "MEJOR TIEMPO: 0 S"
+
+[node name="Botonreintentar" type="Button" parent="." unique_id=861894539]
+offset_left = 367.0
+offset_top = 545.0
+offset_right = 662.0
+offset_bottom = 654.0
+icon = ExtResource("5_aahof")
+flat = true
+expand_icon = true
+
+[node name="Botonmenu" type="Button" parent="." unique_id=1279719358]
+offset_left = 658.0
+offset_top = 538.0
+offset_right = 953.0
+offset_bottom = 654.0
+icon = ExtResource("6_ovgy0")
+flat = true
+expand_icon = true

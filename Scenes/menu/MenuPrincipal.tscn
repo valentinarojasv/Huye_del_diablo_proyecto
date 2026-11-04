@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://rtancpkkpmio" path="res://assets/final/Menu.png" id="2_7hkwc"]
 [ext_resource type="Texture2D" uid="uid://unhm8idialpv" path="res://assets/final/Titulo.png" id="3_twbqk"]
 [ext_resource type="Texture2D" uid="uid://eqlwmqkbtd35" path="res://assets/final/btnjugar.png" id="4_ko0mj"]
-[ext_resource type="FontFile" uid="uid://db4d2g4m3t0t7" path="res://assets/final/fonts/MetalMania-Regular.ttf" id="5_smywt"]
+[ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="5_s8qn1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg33y"]
 bg_color = Color(0.70980394, 0.02745098, 0.047058824, 1)
@@ -30,30 +30,30 @@ expand_mode = 1
 
 [node name="titulo" type="TextureRect" parent="." unique_id=25667902]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 12.0
-offset_right = 548.0
-offset_bottom = 174.0
+offset_left = 94.0
+offset_top = 21.0
+offset_right = 535.0
+offset_bottom = 216.0
 texture = ExtResource("3_twbqk")
 expand_mode = 1
 
 [node name="BotonJugar" type="Button" parent="." unique_id=1102951027]
 layout_mode = 0
-offset_left = 752.0
-offset_top = 594.0
-offset_right = 1038.0
-offset_bottom = 700.0
+offset_left = 751.0
+offset_top = 603.0
+offset_right = 1037.0
+offset_bottom = 709.0
 icon = ExtResource("4_ko0mj")
 flat = true
 expand_icon = true
 
 [node name="MejorPuntaje" type="Label" parent="." unique_id=1521404505]
 layout_mode = 0
-offset_left = 814.0
-offset_top = 578.0
-offset_right = 972.0
-offset_bottom = 605.0
-theme_override_fonts/font = ExtResource("5_smywt")
+offset_left = 795.0
+offset_top = 581.0
+offset_right = 974.0
+offset_bottom = 608.0
+theme_override_fonts/font = ExtResource("5_s8qn1")
 theme_override_font_sizes/font_size = 21
 theme_override_styles/normal = SubResource("StyleBoxFlat_sg33y")
 text = "MEJOR TIEMPO: 0 s"

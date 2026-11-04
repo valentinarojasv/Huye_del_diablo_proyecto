@@ -132,8 +132,9 @@ func recibir_dano() -> void:
 
 	vidas_cambiadas.emit(vidas_actuales)
 
-	# Avisar al juego que el jugador recibió un golpe.
 	dano_recibido.emit()
+
+	GestorAudio.reproducir_sonido("latigazo")
 
 	if vidas_actuales <= 0:
 		jugador_derrotado.emit()

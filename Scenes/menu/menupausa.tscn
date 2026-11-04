@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://8kkgppvjjug7"]
+
+[ext_resource type="Script" uid="uid://dss7rq3ewhnqk" path="res://Scripts/menupausa.gd" id="1_60rru"]
+[ext_resource type="Texture2D" uid="uid://utmp50tpkleu" path="res://assets/final/Menupausa.png" id="1_l2gl3"]
+[ext_resource type="Texture2D" uid="uid://cldvcnpbkn434" path="res://assets/final/Pausa.png" id="2_u8qbl"]
+[ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="3_u8qbl"]
+[ext_resource type="Texture2D" uid="uid://bhbnk7m5qbkeo" path="res://assets/final/btncontinuar.png" id="5_53g76"]
+[ext_resource type="Texture2D" uid="uid://ktwor818p6kh" path="res://assets/final/btnmenu.png" id="6_v4ffr"]
+
+[node name="Menupausa" type="CanvasLayer" unique_id=744399475]
+process_mode = 3
+layer = 10
+script = ExtResource("1_60rru")
+
+[node name="FondoPausa" type="TextureRect" parent="." unique_id=1699398356]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_l2gl3")
+expand_mode = 1
+
+[node name="TituloPausa" type="TextureRect" parent="." unique_id=1939412988]
+offset_left = 289.0
+offset_top = -1.0
+offset_right = 1032.0
+offset_bottom = 560.0
+texture = ExtResource("2_u8qbl")
+expand_mode = 1
+
+[node name="BotonContinuar" type="Button" parent="." unique_id=1132060009]
+offset_left = 476.0
+offset_top = 268.0
+offset_right = 843.0
+offset_bottom = 446.0
+theme_override_fonts/font = ExtResource("3_u8qbl")
+theme_override_font_sizes/font_size = 27
+icon = ExtResource("5_53g76")
+flat = true
+expand_icon = true
+
+[node name="BotonMenuPrincipal" type="Button" parent="." unique_id=2029844795]
+offset_left = 480.0
+offset_top = 151.0
+offset_right = 843.0
+offset_bottom = 326.0
+theme_override_fonts/font = ExtResource("3_u8qbl")
+theme_override_font_sizes/font_size = 27
+icon = ExtResource("6_v4ffr")
+flat = true
+expand_icon = true

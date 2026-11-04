@@ -2,14 +2,22 @@
 
 [ext_resource type="Script" uid="uid://dl2arrndccp54" path="res://Scripts/diablo.gd" id="1_238n2"]
 [ext_resource type="Resource" uid="uid://c85nxrr61vysi" path="res://resources/configuracion_diablo.tres" id="2_oc3nh"]
-[ext_resource type="AudioStream" uid="uid://d1po6g4eick27" path="res://audio/SonidoAdvertencia.ogg" id="3_o4lch"]
-[ext_resource type="AudioStream" uid="uid://w6vg7wl5mt5w" path="res://audio/Latigazo.ogg" id="4_ma3lj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f6pym"]
 radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
 size = Vector2(80, 30)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ma3lj"]
+emission_shape = 1
+emission_sphere_radius = 12.0
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 12.0
+color = Color(0, 0.51510525, 0.96733445, 1)
 
 [node name="Diablo" type="CharacterBody2D" unique_id=226193950]
 script = ExtResource("1_238n2")
@@ -39,10 +47,15 @@ color = Color(1, 0, 0, 0.39215687)
 polygon = PackedVector2Array(0, -15, 80, -15, 80, 15, 0, 15)
 uv = PackedVector2Array(0, -15, 80, -15, 80, 15, 0, 15)
 
-[node name="SonidoAdvertencia" type="AudioStreamPlayer2D" parent="." unique_id=936661488]
-stream = ExtResource("3_o4lch")
+[node name="AdvertenciaEmbestida" type="Polygon2D" parent="." unique_id=431108981]
+visible = false
+color = Color(0.8901961, 0, 0, 0.60784316)
+polygon = PackedVector2Array(0, -30, 450, -30, 450, 30, 0, 30)
 
-[node name="SonidoLatigazo" type="AudioStreamPlayer2D" parent="." unique_id=1508690972]
-stream = ExtResource("4_ma3lj")
+[node name="EstelaEmbestida" type="GPUParticles2D" parent="." unique_id=87411755]
+emitting = false
+amount = 20
+amount_ratio = 0.35
+process_material = SubResource("ParticleProcessMaterial_ma3lj")
 
 [connection signal="body_entered" from="Latigo" to="." method="_on_latigo_body_entered"]

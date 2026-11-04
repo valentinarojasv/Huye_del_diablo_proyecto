@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://kgfo670vpa1o" path="res://Scenes/ui/hub.tscn" id="4_p2ibf"]
 [ext_resource type="Script" uid="uid://c5f4e30oavgou" path="res://Scripts/hub.gd" id="5_gr0cm"]
 [ext_resource type="PackedScene" uid="uid://ctgarateobyxw" path="res://Scenes/entidades/diablo.tscn" id="5_ho3tb"]
-[ext_resource type="PackedScene" uid="uid://dsqlmvamha0my" path="res://Scenes/ui/fin_juego.tscn" id="6_ho3tb"]
 
 [sub_resource type="TileSet" id="TileSet_dvfph"]
 
@@ -52,6 +51,3 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 0.21176471, 0.16078432, 0.6156863)
-
-[node name="FinJuego" parent="." unique_id=975219571 instance=ExtResource("6_ho3tb")]
-visible = false
