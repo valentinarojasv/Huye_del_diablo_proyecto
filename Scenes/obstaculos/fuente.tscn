@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b430fqkhhj663"]
+
+[ext_resource type="Texture2D" uid="uid://xg01v2b1k5nm" path="res://assets/escenario/obstaculos/fuente.png" id="1_xm5ag"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f6pym"]
+radius = 110.0
+
+[node name="Fuente" type="StaticBody2D" unique_id=1820124200]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=453094849]
+position = Vector2(632, 344.00003)
+scale = Vector2(0.20035417, 0.21289063)
+texture = ExtResource("1_xm5ag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1918638240]
+position = Vector2(629, 346)
+shape = SubResource("CircleShape2D_f6pym")

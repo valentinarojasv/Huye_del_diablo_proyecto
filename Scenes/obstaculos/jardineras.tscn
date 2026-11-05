@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://ywpjn1eoe0td"]
+
+[ext_resource type="Texture2D" uid="uid://r7ybv5r3fqhb" path="res://assets/escenario/obstaculos/Jardinera.png" id="1_xklpm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4vho"]
+custom_solver_bias = 1.0
+size = Vector2(91, 66)
+
+[node name="Jardineras" type="StaticBody2D" unique_id=175464858]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1624251857]
+position = Vector2(247.56248, 213.65625)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=343828083]
+position = Vector2(343, 213)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=464724509]
+position = Vector2(247, 280)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=141397753]
+position = Vector2(342, 279)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=128222864]
+position = Vector2(453, 219)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=738913216]
+position = Vector2(245, 213)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=563126631]
+position = Vector2(342, 213)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=1361505243]
+position = Vector2(248, 281)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="." unique_id=5385181]
+position = Vector2(342, 282)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=1066348132]
+position = Vector2(564, 218)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=619961562]
+position = Vector2(456.00003, 290)
+scale = Vector2(0.05235346, 0.07292842)
+texture = ExtResource("1_xklpm")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="." unique_id=1034527201]
+position = Vector2(456, 291)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="." unique_id=485331772]
+position = Vector2(453, 219)
+shape = SubResource("RectangleShape2D_n4vho")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="." unique_id=920634335]
+position = Vector2(563, 217)
+shape = SubResource("RectangleShape2D_n4vho")

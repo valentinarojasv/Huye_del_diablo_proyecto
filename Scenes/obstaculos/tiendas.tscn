@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bdxdaqu6r11xx"]
+
+[ext_resource type="Texture2D" uid="uid://bryuv7hpshpt7" path="res://assets/escenario/obstaculos/panaderia.png" id="1_23qxt"]
+[ext_resource type="Texture2D" uid="uid://tb1e8rtbix5g" path="res://assets/escenario/obstaculos/Puesto.png" id="2_4tjg5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tjg5"]
+size = Vector2(200, 180)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cms2"]
+size = Vector2(200, 200)
+
+[node name="Tiendas" type="StaticBody2D" unique_id=1414345019]
+
+[node name="Panaderia" type="Sprite2D" parent="." unique_id=624686160]
+position = Vector2(601, 96.00003)
+scale = Vector2(0.17024745, 0.17480467)
+texture = ExtResource("1_23qxt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1096431924]
+position = Vector2(602, 94)
+shape = SubResource("RectangleShape2D_4tjg5")
+
+[node name="Puesto" type="Sprite2D" parent="." unique_id=448155377]
+position = Vector2(1122, 86)
+scale = Vector2(0.15104169, 0.1850586)
+texture = ExtResource("2_4tjg5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1015339390]
+position = Vector2(1119, 87)
+shape = SubResource("RectangleShape2D_5cms2")

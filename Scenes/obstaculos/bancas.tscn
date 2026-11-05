@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://16i8wuj08iua"]
+
+[ext_resource type="Texture2D" uid="uid://fs2rui0mnuy2" path="res://assets/escenario/obstaculos/banca.png" id="1_n0yey"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
+custom_solver_bias = 1.0
+size = Vector2(110, 70)
+
+[node name="Bancas" type="StaticBody2D" unique_id=2046190902]
+
+[node name="Banca" type="Sprite2D" parent="." unique_id=171250340]
+position = Vector2(208.99997, 105)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca2" type="Sprite2D" parent="." unique_id=1443704304]
+position = Vector2(364, 103)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca3" type="Sprite2D" parent="." unique_id=2128421380]
+position = Vector2(528, 100)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca4" type="Sprite2D" parent="." unique_id=439022760]
+position = Vector2(209, 200)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca5" type="Sprite2D" parent="." unique_id=657431965]
+position = Vector2(356, 194)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca6" type="Sprite2D" parent="." unique_id=1444567268]
+position = Vector2(526, 193)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="Banca7" type="Sprite2D" parent="." unique_id=1403176224]
+position = Vector2(650, 193)
+scale = Vector2(0.07793121, 0.092305526)
+texture = ExtResource("1_n0yey")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=539725001]
+position = Vector2(207, 108)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=318632938]
+position = Vector2(362, 108)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=1643558184]
+position = Vector2(528, 103)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=787141238]
+position = Vector2(211, 203)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="." unique_id=520437618]
+position = Vector2(354, 197)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="." unique_id=1875205277]
+position = Vector2(523, 196)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="." unique_id=1375536208]
+position = Vector2(651, 193)
+shape = SubResource("RectangleShape2D_f6pym")

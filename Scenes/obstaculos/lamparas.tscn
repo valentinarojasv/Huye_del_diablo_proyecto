@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c1fkkajb37o4o"]
+
+[ext_resource type="Texture2D" uid="uid://cp0xyf0d5sdum" path="res://assets/escenario/obstaculos/Lampara.png" id="1_0675l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
+size = Vector2(100, 180)
+
+[node name="lamparas" type="StaticBody2D" unique_id=1892386479]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=418557651]
+position = Vector2(395, 308)
+scale = Vector2(0.14941406, 0.16308594)
+texture = ExtResource("1_0675l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=884146632]
+position = Vector2(395, 310)
+shape = SubResource("RectangleShape2D_f6pym")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=96882005]
+position = Vector2(549, 312.00003)
+scale = Vector2(0.14941406, 0.16308594)
+texture = ExtResource("1_0675l")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=865221370]
+position = Vector2(548, 314)
+shape = SubResource("RectangleShape2D_f6pym")

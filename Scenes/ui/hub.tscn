@@ -21,10 +21,10 @@ text = "VIDAS: 3"
 
 [node name="IndicadorTiempo" type="Label" parent="." unique_id=944331117]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 20.0
-offset_right = 667.0
-offset_bottom = 43.0
+offset_left = 582.0
+offset_top = 43.0
+offset_right = 669.0
+offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("1_w4rgr")
 text = "TIEMPO: 0 S"
 

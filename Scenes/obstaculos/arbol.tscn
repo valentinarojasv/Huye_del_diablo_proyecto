@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bhp1lb1ex7qvl"]
+
+[ext_resource type="Texture2D" uid="uid://c03igx7fg0ruv" path="res://assets/escenario/obstaculos/arbol.png" id="1_2jdys"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wj6tv"]
+size = Vector2(140, 170)
+
+[node name="Arbol" type="StaticBody2D" unique_id=1287575486]
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1427982467]
+position = Vector2(449.00003, 273.00003)
+scale = Vector2(0.10995653, 0.11844116)
+texture = ExtResource("1_2jdys")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=844582107]
+position = Vector2(285, 275)
+scale = Vector2(0.11709402, 0.12444199)
+texture = ExtResource("1_2jdys")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=2007086064]
+position = Vector2(284, 277)
+shape = SubResource("RectangleShape2D_wj6tv")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=1770444648]
+position = Vector2(451, 276)
+shape = SubResource("RectangleShape2D_wj6tv")

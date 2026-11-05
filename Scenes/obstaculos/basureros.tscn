@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://ducvsbi6vb0wb"]
+
+[ext_resource type="Texture2D" uid="uid://mdfldtvnoh6o" path="res://assets/escenario/obstaculos/Basurero.png" id="1_ytd2p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sg33y"]
+size = Vector2(700.9673, 1011.7379)
+
+[node name="basureros" type="StaticBody2D" unique_id=978570382]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1339420511]
+position = Vector2(285.68747, 168.20314)
+scale = Vector2(0.099862, 0.09636885)
+texture = ExtResource("1_ytd2p")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=656398742]
+position = Vector2(404, 169)
+scale = Vector2(0.099862, 0.09636885)
+texture = ExtResource("1_ytd2p")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1410651210]
+position = Vector2(523, 164)
+scale = Vector2(0.099862, 0.09636885)
+texture = ExtResource("1_ytd2p")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1655471369]
+position = Vector2(189, 173)
+scale = Vector2(0.099862, 0.09636885)
+texture = ExtResource("1_ytd2p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1160520908]
+position = Vector2(285, 168.5)
+scale = Vector2(0.099862, 0.09636885)
+shape = SubResource("RectangleShape2D_sg33y")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=584106118]
+position = Vector2(525, 165.25)
+scale = Vector2(0.099862, 0.09636885)
+shape = SubResource("RectangleShape2D_sg33y")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=1790875807]
+position = Vector2(402, 168)
+scale = Vector2(0.099862, 0.09636885)
+shape = SubResource("RectangleShape2D_sg33y")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=1517425708]
+position = Vector2(187, 171)
+scale = Vector2(0.099862, 0.09636885)
+shape = SubResource("RectangleShape2D_sg33y")
