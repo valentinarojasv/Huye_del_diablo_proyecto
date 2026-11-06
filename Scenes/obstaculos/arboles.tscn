@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c8wa0k1hevapp"]
 
 [ext_resource type="Texture2D" uid="uid://xx4yjaxr2quc" path="res://assets/escenario/obstaculos/mangos.png" id="1_dbeic"]
-[ext_resource type="Texture2D" uid="uid://7g3juefvpmkj" path="res://assets/escenario/obstaculos/florarbol.png" id="2_fk406"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
 size = Vector2(164.75, 213)
@@ -13,24 +12,6 @@ position = Vector2(163.4375, 141.8125)
 scale = Vector2(0.22054139, 0.22815675)
 texture = ExtResource("1_dbeic")
 
-[node name="mango2" type="Sprite2D" parent="." unique_id=61325362]
-position = Vector2(519, 149)
-scale = Vector2(0.22054139, 0.22815675)
-texture = ExtResource("1_dbeic")
-
-[node name="flores" type="Sprite2D" parent="." unique_id=761190990]
-position = Vector2(335, 145)
-scale = Vector2(0.21760432, 0.23633035)
-texture = ExtResource("2_fk406")
-
 [node name="shape" type="CollisionShape2D" parent="." unique_id=153683172]
 position = Vector2(158.5, 144.5)
-shape = SubResource("RectangleShape2D_f6pym")
-
-[node name="shape2" type="CollisionShape2D" parent="." unique_id=490278653]
-position = Vector2(341.625, 145)
-shape = SubResource("RectangleShape2D_f6pym")
-
-[node name="shape3" type="CollisionShape2D" parent="." unique_id=358245452]
-position = Vector2(515.75, 143)
 shape = SubResource("RectangleShape2D_f6pym")

@@ -11,6 +11,7 @@ metadata/_custom_type_script = "uid://cctpv8jo66iuw"
 radius = 16.0
 
 [node name="Jugador" type="CharacterBody2D" unique_id=358537819 groups=["jugador"]]
+position = Vector2(640, 110)
 script = ExtResource("1_gynp0")
 configuracion = SubResource("Resource_xfidg")
 

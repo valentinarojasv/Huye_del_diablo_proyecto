@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7g3juefvpmkj"
-path="res://.godot/imported/florarbol.png-75fb56a9b1fce342ed997a241424351b.ctex"
+uid="uid://cmbfyj3wfnp6x"
+path="res://.godot/imported/carreta2.png-4fd404e8804178c50bc061276d801f36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/escenario/obstaculos/florarbol.png"
-dest_files=["res://.godot/imported/florarbol.png-75fb56a9b1fce342ed997a241424351b.ctex"]
+source_file="res://assets/escenario/obstaculos/carreta2.png"
+dest_files=["res://.godot/imported/carreta2.png-4fd404e8804178c50bc061276d801f36.ctex"]
 
 [params]
 

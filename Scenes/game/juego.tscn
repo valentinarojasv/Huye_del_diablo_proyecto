@@ -7,77 +7,74 @@
 [ext_resource type="PackedScene" uid="uid://kgfo670vpa1o" path="res://Scenes/ui/hub.tscn" id="4_p2ibf"]
 [ext_resource type="Script" uid="uid://c5f4e30oavgou" path="res://Scripts/hub.gd" id="5_gr0cm"]
 [ext_resource type="PackedScene" uid="uid://ctgarateobyxw" path="res://Scenes/entidades/diablo.tscn" id="5_ho3tb"]
-[ext_resource type="PackedScene" uid="uid://bhp1lb1ex7qvl" path="res://Scenes/obstaculos/arbol.tscn" id="5_ixi3t"]
 [ext_resource type="PackedScene" uid="uid://16i8wuj08iua" path="res://Scenes/obstaculos/bancas.tscn" id="6_813tl"]
 [ext_resource type="Texture2D" uid="uid://d1jjgk6pbbyxo" path="res://assets/escenario/fondo_plaza.png" id="6_ho3tb"]
 [ext_resource type="PackedScene" uid="uid://c1fkkajb37o4o" path="res://Scenes/obstaculos/lamparas.tscn" id="7_e4mmn"]
 [ext_resource type="PackedScene" uid="uid://ld1s15yuamni" path="res://Scenes/obstaculos/marco.tscn" id="7_rbg1w"]
 [ext_resource type="PackedScene" uid="uid://ywpjn1eoe0td" path="res://Scenes/obstaculos/jardineras.tscn" id="9_66tbc"]
 [ext_resource type="PackedScene" uid="uid://ducvsbi6vb0wb" path="res://Scenes/obstaculos/basureros.tscn" id="10_813tl"]
+[ext_resource type="PackedScene" uid="uid://dcu11tkh3cd34" path="res://Scenes/obstaculos/carreta.tscn" id="11_66tbc"]
 [ext_resource type="PackedScene" uid="uid://c8wa0k1hevapp" path="res://Scenes/obstaculos/arboles.tscn" id="11_e4mmn"]
+[ext_resource type="PackedScene" uid="uid://cw50icisg62rv" path="res://Scenes/obstaculos/faroles.tscn" id="12_66tbc"]
+[ext_resource type="PackedScene" uid="uid://hweku4y7a3vu" path="res://Scenes/obstaculos/otrascosas.tscn" id="13_ku3ft"]
+[ext_resource type="Texture2D" uid="uid://m0hylhh6435r" path="res://assets/final/botonPausa.png" id="17_a7mqa"]
+[ext_resource type="Script" uid="uid://beluang648sn3" path="res://Scripts/boton_pausa.gd" id="18_6hfqe"]
 
 [sub_resource type="TileSet" id="TileSet_dvfph"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_dx8dx"]
-vertices = PackedVector2Array(1267.0078, 708, 6.0703125, 708, 10.9296875, 6.9765625, 1267.9766, 5.0078125)
+vertices = PackedVector2Array(1261.0234, 702, 12.109375, 702, 16.882813, 12.96875, 1261.9688, 11.0234375)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(1, -3, 1278, -5, 1277, 718, -4, 718)])
+parsed_geometry_type = 1
+parsed_collision_mask = 4294967294
+source_geometry_mode = 1
+source_geometry_group_name = &"obstaculos_navegacion"
+agent_radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_813tl"]
 custom_solver_bias = 1.0
-size = Vector2(118.5, 42)
+size = Vector2(116, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e4mmn"]
 custom_solver_bias = 1.0
-size = Vector2(137.5, 54)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w102m"]
-custom_solver_bias = 1.0
-size = Vector2(139.5, 44)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_66tbc"]
-custom_solver_bias = 1.0
-size = Vector2(139.5, 49)
+size = Vector2(119, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p13vo"]
 custom_solver_bias = 1.0
-size = Vector2(123.5, 39)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o5etn"]
-custom_solver_bias = 1.0
-size = Vector2(130.5, 51)
+size = Vector2(111.5, 39)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cq3xe"]
 custom_solver_bias = 1.0
-size = Vector2(114.5, 47)
+size = Vector2(114.5, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ku3ft"]
 custom_solver_bias = 1.0
-size = Vector2(164.5, 100)
+size = Vector2(136, 87)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a7mqa"]
 custom_solver_bias = 1.0
-size = Vector2(161, 99)
+size = Vector2(134, 86)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hfqe"]
 custom_solver_bias = 1.0
-size = Vector2(147, 100)
+size = Vector2(133.5, 86)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2qyif"]
 custom_solver_bias = 1.0
-size = Vector2(158, 106)
+size = Vector2(123, 87)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwand"]
 custom_solver_bias = 1.0
-size = Vector2(159, 115)
+size = Vector2(140.5, 90)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08o18"]
 custom_solver_bias = 1.0
-size = Vector2(159, 113)
+size = Vector2(133, 88.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6cbh"]
 custom_solver_bias = 1.0
-size = Vector2(170, 132)
+size = Vector2(137, 94)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ixi3t"]
 size = Vector2(78, 148)
@@ -85,23 +82,47 @@ size = Vector2(78, 148)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_20ejb"]
 size = Vector2(80, 150)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psjat"]
+size = Vector2(235, 192)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qlykq"]
+load_path = "res://.godot/imported/Puesto.png-f077f286d87033cfa148e4b82b038bbc.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0my1"]
+size = Vector2(228.5, 184)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jiie"]
 size = Vector2(490.6764, 775.6661)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1opi0"]
-size = Vector2(700.9673, 775.66583)
+size = Vector2(375.51917, 564.23816)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v38m5"]
-size = Vector2(550.76, 837.9268)
+size = Vector2(415.57385, 598.61194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjs6w"]
+size = Vector2(550.7605, 507.16592)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5po78"]
-size = Vector2(119.375, 166.5)
+size = Vector2(70.6875, 117.25)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2yme"]
-size = Vector2(123.375, 153.75)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qlykq"]
+size = Vector2(139, 90)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1xmi"]
-size = Vector2(100.375, 139.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_im0i0"]
+size = Vector2(36, 111.125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igews"]
+size = Vector2(36, 131.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jhn4"]
+size = Vector2(31, 127.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2i6rs"]
+size = Vector2(116, 131)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqc5p"]
+size = Vector2(116, 144)
 
 [node name="Juego" type="Node2D" unique_id=1304233476]
 script = ExtResource("1_dvfph")
@@ -111,7 +132,7 @@ position = Vector2(641, 360.99997)
 scale = Vector2(0.76674646, 0.7672689)
 texture = ExtResource("6_ho3tb")
 
-[node name="Escenario" type="Node2D" parent="." unique_id=761850626]
+[node name="Escenario" type="Node2D" parent="." unique_id=761850626 groups=["obstaculos_navegacion"]]
 
 [node name="Mapa" type="TileMapLayer" parent="Escenario" unique_id=224536940]
 tile_set = SubResource("TileSet_dvfph")
@@ -134,6 +155,10 @@ position = Vector2(637, 376)
 [node name="Marco" parent="Escenario" unique_id=487269509 instance=ExtResource("7_rbg1w")]
 position = Vector2(-7, -12)
 
+[node name="Sprite2D" parent="Escenario/Marco" index="0" unique_id=918938381]
+position = Vector2(645, 367)
+scale = Vector2(0.784689, 0.805526)
+
 [node name="CollisionShape2D" parent="Escenario/Marco" index="1" unique_id=1396513268]
 visible = false
 
@@ -146,151 +171,108 @@ visible = false
 [node name="CollisionShape2D4" parent="Escenario/Marco" index="4" unique_id=150881184]
 visible = false
 
-[node name="Arbol" parent="Escenario" unique_id=1287575486 instance=ExtResource("5_ixi3t")]
-position = Vector2(528, -168)
-
-[node name="Sprite2D2" parent="Escenario/Arbol" index="0" unique_id=1427982467]
-position = Vector2(476.00003, 255)
-
-[node name="Sprite2D" parent="Escenario/Arbol" index="1" unique_id=844582107]
-position = Vector2(-441, 707)
-
-[node name="CollisionShape2D3" parent="Escenario/Arbol" index="2" unique_id=2007086064]
-visible = false
-position = Vector2(-439, 704)
-
-[node name="CollisionShape2D4" parent="Escenario/Arbol" index="3" unique_id=1770444648]
-visible = false
-position = Vector2(472, 264)
-
 [node name="Jardineras" parent="Escenario" unique_id=175464858 instance=ExtResource("9_66tbc")]
 
 [node name="Sprite2D" parent="Escenario/Jardineras" index="0" unique_id=1624251857]
-position = Vector2(1102.2813, 316)
-scale = Vector2(0.07521845, 0.07292842)
+position = Vector2(1115.3594, 316)
+scale = Vector2(0.07255852, 0.07292842)
 
 [node name="Sprite2D2" parent="Escenario/Jardineras" index="1" unique_id=343828083]
-position = Vector2(909.78125, 450)
-scale = Vector2(0.088183515, 0.07292842)
+position = Vector2(916.00006, 455.00003)
+scale = Vector2(0.07521843, 0.07254085)
 
-[node name="Sprite2D3" parent="Escenario/Jardineras" index="2" unique_id=464724509]
-position = Vector2(404.78125, 484)
-scale = Vector2(0.07239996, 0.07292842)
-
-[node name="Sprite2D4" parent="Escenario/Jardineras" index="3" unique_id=141397753]
-position = Vector2(904, 179)
-scale = Vector2(0.08423768, 0.07440812)
-
-[node name="Sprite2D5" parent="Escenario/Jardineras" index="4" unique_id=128222864]
-position = Vector2(297, 260)
-scale = Vector2(0.07666291, 0.07292842)
-
-[node name="CollisionShape2D2" parent="Escenario/Jardineras" index="5" unique_id=738913216]
+[node name="CollisionShape2D2" parent="Escenario/Jardineras" index="2" unique_id=738913216]
 visible = false
-position = Vector2(1105.75, 313)
+position = Vector2(1111, 313)
 shape = SubResource("RectangleShape2D_813tl")
 
-[node name="CollisionShape2D3" parent="Escenario/Jardineras" index="6" unique_id=563126631]
+[node name="CollisionShape2D3" parent="Escenario/Jardineras" index="3" unique_id=563126631]
 visible = false
-position = Vector2(911.25, 456)
+position = Vector2(914.5, 456)
 shape = SubResource("RectangleShape2D_e4mmn")
 
-[node name="CollisionShape2D4" parent="Escenario/Jardineras" index="7" unique_id=1361505243]
+[node name="Sprite2D6" parent="Escenario/Jardineras" index="4" unique_id=1066348132]
 visible = false
-position = Vector2(411.25, 482)
-shape = SubResource("RectangleShape2D_w102m")
+position = Vector2(164.28125, 94)
+scale = Vector2(0.07070886, 0.07292842)
 
-[node name="CollisionShape2D5" parent="Escenario/Jardineras" index="8" unique_id=5385181]
+[node name="Sprite2D7" parent="Escenario/Jardineras" index="5" unique_id=619961562]
+position = Vector2(390, 92)
+scale = Vector2(0.07070884, 0.07292842)
+
+[node name="CollisionShape2D6" parent="Escenario/Jardineras" index="6" unique_id=1034527201]
 visible = false
-position = Vector2(896.25, 182.5)
-shape = SubResource("RectangleShape2D_66tbc")
-
-[node name="Sprite2D6" parent="Escenario/Jardineras" index="9" unique_id=1066348132]
-position = Vector2(168.78125, 94)
-scale = Vector2(0.07578214, 0.07292842)
-
-[node name="Sprite2D7" parent="Escenario/Jardineras" index="10" unique_id=619961562]
-position = Vector2(444.28128, 94)
-scale = Vector2(0.07521845, 0.07292842)
-
-[node name="CollisionShape2D6" parent="Escenario/Jardineras" index="11" unique_id=1034527201]
-visible = false
-position = Vector2(445.25, 91.5)
+position = Vector2(395, 93)
 shape = SubResource("RectangleShape2D_p13vo")
 
-[node name="CollisionShape2D7" parent="Escenario/Jardineras" index="12" unique_id=485331772]
+[node name="CollisionShape2D8" parent="Escenario/Jardineras" index="7" unique_id=920634335]
 visible = false
-position = Vector2(295.75, 264.5)
-shape = SubResource("RectangleShape2D_o5etn")
-
-[node name="CollisionShape2D8" parent="Escenario/Jardineras" index="13" unique_id=920634335]
-visible = false
-position = Vector2(168.75, 100.5)
+position = Vector2(168.75, 93.5)
 shape = SubResource("RectangleShape2D_cq3xe")
 
 [node name="Bancas" parent="Escenario" unique_id=2046190902 instance=ExtResource("6_813tl")]
 
 [node name="Banca" parent="Escenario/Bancas" index="0" unique_id=171250340]
-position = Vector2(912, 508)
-scale = Vector2(0.11982101, 0.14032553)
+position = Vector2(918.00006, 507)
+scale = Vector2(0.10049677, 0.12653252)
 
 [node name="Banca2" parent="Escenario/Bancas" index="1" unique_id=1443704304]
-position = Vector2(900.46875, 232.51561)
-scale = Vector2(0.11784809, 0.14314406)
+position = Vector2(896, 235)
+scale = Vector2(0.09924605, 0.13187012)
 
 [node name="Banca3" parent="Escenario/Bancas" index="2" unique_id=2128421380]
-position = Vector2(1107, 371.00003)
-scale = Vector2(0.11168266, 0.13408962)
+position = Vector2(1117, 368.00003)
+scale = Vector2(0.09755498, 0.1211598)
 
 [node name="Banca4" parent="Escenario/Bancas" index="3" unique_id=439022760]
-position = Vector2(405, 546)
-scale = Vector2(0.124647684, 0.15438275)
+position = Vector2(436.14063, 566.8828)
+scale = Vector2(0.09260501, 0.122023)
 
 [node name="Banca5" parent="Escenario/Bancas" index="4" unique_id=657431965]
-position = Vector2(171, 151)
-scale = Vector2(0.12207582, 0.15610908)
+position = Vector2(167.00002, 141)
+scale = Vector2(0.09824196, 0.12765995)
 
 [node name="Banca6" parent="Escenario/Bancas" index="5" unique_id=1444567268]
-position = Vector2(446, 153)
-scale = Vector2(0.11901069, 0.1645293)
+position = Vector2(392, 142)
+scale = Vector2(0.0995279, 0.13299745)
 
 [node name="Banca7" parent="Escenario/Bancas" index="6" unique_id=1403176224]
-position = Vector2(296, 324)
-scale = Vector2(0.1280299, 0.16452928)
+position = Vector2(331, 322)
+scale = Vector2(0.10685599, 0.13074264)
 
 [node name="CollisionShape2D" parent="Escenario/Bancas" index="7" unique_id=539725001]
 visible = false
-position = Vector2(909, 511)
+position = Vector2(918, 512.5)
 shape = SubResource("RectangleShape2D_ku3ft")
 
 [node name="CollisionShape2D2" parent="Escenario/Bancas" index="8" unique_id=318632938]
 visible = false
-position = Vector2(1103.5, 372.5)
+position = Vector2(1117, 374)
 shape = SubResource("RectangleShape2D_a7mqa")
 
 [node name="CollisionShape2D3" parent="Escenario/Bancas" index="9" unique_id=1643558184]
 visible = false
-position = Vector2(904, 232)
+position = Vector2(897.25, 239)
 shape = SubResource("RectangleShape2D_6hfqe")
 
 [node name="CollisionShape2D4" parent="Escenario/Bancas" index="10" unique_id=787141238]
 visible = false
-position = Vector2(407, 550)
+position = Vector2(436.5, 568.5)
 shape = SubResource("RectangleShape2D_2qyif")
 
 [node name="CollisionShape2D5" parent="Escenario/Bancas" index="11" unique_id=520437618]
 visible = false
-position = Vector2(158, 155.5)
+position = Vector2(167.25, 143)
 shape = SubResource("RectangleShape2D_lwand")
 
 [node name="CollisionShape2D6" parent="Escenario/Bancas" index="12" unique_id=1875205277]
 visible = false
-position = Vector2(392.5, 151.5)
+position = Vector2(391, 145)
 shape = SubResource("RectangleShape2D_08o18")
 
 [node name="CollisionShape2D7" parent="Escenario/Bancas" index="13" unique_id=1375536208]
 visible = false
-position = Vector2(272, 323)
+position = Vector2(330, 321)
 shape = SubResource("RectangleShape2D_v6cbh")
 
 [node name="lamparas" parent="Escenario" unique_id=1892386479 instance=ExtResource("7_e4mmn")]
@@ -316,14 +298,23 @@ shape = SubResource("RectangleShape2D_20ejb")
 [node name="Tiendas" parent="Escenario" unique_id=1414345019 instance=ExtResource("4_5cms2")]
 
 [node name="Panaderia" parent="Escenario/Tiendas" index="0" unique_id=624686160]
-position = Vector2(192, 530.00006)
+position = Vector2(181.00002, 539)
+scale = Vector2(0.17024745, 0.19189441)
 
 [node name="CollisionShape2D" parent="Escenario/Tiendas" index="1" unique_id=1096431924]
 visible = false
-position = Vector2(200, 524)
+position = Vector2(182.5, 540)
+shape = SubResource("RectangleShape2D_psjat")
+
+[node name="Puesto" parent="Escenario/Tiendas" index="2" unique_id=448155377]
+position = Vector2(1114.0001, 107.00001)
+scale = Vector2(0.1582031, 0.1850586)
+texture = SubResource("CompressedTexture2D_qlykq")
 
 [node name="CollisionShape2D2" parent="Escenario/Tiendas" index="3" unique_id=1015339390]
 visible = false
+position = Vector2(1114, 108)
+shape = SubResource("RectangleShape2D_t0my1")
 
 [node name="basureros" parent="Escenario" unique_id=978570382 instance=ExtResource("10_813tl")]
 
@@ -332,16 +323,16 @@ position = Vector2(801, 255.00002)
 scale = Vector2(0.06676367, 0.06430047)
 
 [node name="Sprite2D2" parent="Escenario/basureros" index="1" unique_id=656398742]
-position = Vector2(415, 349.00003)
-scale = Vector2(0.07346708, 0.072843194)
+position = Vector2(423.00003, 340)
+scale = Vector2(0.05819331, 0.055277675)
 
 [node name="Sprite2D3" parent="Escenario/basureros" index="2" unique_id=1410651210]
-position = Vector2(1025.4219, 522.3008)
-scale = Vector2(0.07346708, 0.06881423)
+position = Vector2(831.00006, 524)
+scale = Vector2(0.05723826, 0.052134745)
 
 [node name="Sprite2D4" parent="Escenario/basureros" index="3" unique_id=1655471369]
-position = Vector2(515.9219, 570.1992)
-scale = Vector2(0.07110113, 0.06478521)
+position = Vector2(519, 596)
+scale = Vector2(0.062364407, 0.05479452)
 
 [node name="CollisionShape2D" parent="Escenario/basureros" index="4" unique_id=1160520908]
 visible = false
@@ -350,52 +341,108 @@ shape = SubResource("RectangleShape2D_2jiie")
 
 [node name="CollisionShape2D2" parent="Escenario/basureros" index="5" unique_id=584106118]
 visible = false
-position = Vector2(1029, 518.375)
+position = Vector2(832.25, 521.1875)
 shape = SubResource("RectangleShape2D_1opi0")
 
 [node name="CollisionShape2D3" parent="Escenario/basureros" index="6" unique_id=1790875807]
 visible = false
-position = Vector2(417.5, 345.37503)
+position = Vector2(423.25003, 339.84378)
 shape = SubResource("RectangleShape2D_v38m5")
 
 [node name="CollisionShape2D4" parent="Escenario/basureros" index="7" unique_id=1517425708]
 visible = false
-position = Vector2(526, 561)
+position = Vector2(515, 592.4375)
+shape = SubResource("RectangleShape2D_qjs6w")
 
 [node name="arboles" parent="Escenario" unique_id=1944531776 instance=ExtResource("11_e4mmn")]
 
 [node name="mango" parent="Escenario/arboles" index="0" unique_id=990896737]
-position = Vector2(153, 305)
-scale = Vector2(0.16249998, 0.17608514)
+position = Vector2(234, 308)
+scale = Vector2(0.12661226, 0.13587764)
 
-[node name="mango2" parent="Escenario/arboles" index="1" unique_id=61325362]
-position = Vector2(934, 343)
-scale = Vector2(0.15103494, 0.15579201)
-
-[node name="flores" parent="Escenario/arboles" index="2" unique_id=761190990]
-position = Vector2(306, 139)
-scale = Vector2(0.15617093, 0.16562149)
-
-[node name="shape" parent="Escenario/arboles" index="3" unique_id=153683172]
+[node name="shape" parent="Escenario/arboles" index="1" unique_id=153683172]
 visible = false
-position = Vector2(150.3125, 306.25)
+position = Vector2(231, 313)
 shape = SubResource("RectangleShape2D_5po78")
 
-[node name="shape2" parent="Escenario/arboles" index="4" unique_id=490278653]
-visible = false
-position = Vector2(311, 140.125)
-shape = SubResource("RectangleShape2D_j2yme")
+[node name="StaticBody2D" parent="Escenario" unique_id=142090163 instance=ExtResource("11_66tbc")]
+position = Vector2(278, 60)
 
-[node name="shape3" parent="Escenario/arboles" index="5" unique_id=358245452]
+[node name="Sprite2D2" parent="Escenario/StaticBody2D" index="0" unique_id=1774929772]
+position = Vector2(659.99994, 45)
+scale = Vector2(0.10021972, 0.10717774)
+
+[node name="CollisionShape2D2" parent="Escenario/StaticBody2D" index="1" unique_id=571473598]
 visible = false
-position = Vector2(931, 346)
-shape = SubResource("RectangleShape2D_d1xmi")
+position = Vector2(661.5, 48)
+shape = SubResource("RectangleShape2D_qlykq")
+
+[node name="Faroles" parent="Escenario" unique_id=1417300494 instance=ExtResource("12_66tbc")]
+position = Vector2(269, 75)
+
+[node name="Sprite2D" parent="Escenario/Faroles" index="0" unique_id=872633863]
+position = Vector2(-175.00002, 51.000004)
+scale = Vector2(0.09313965, 0.08982341)
+
+[node name="Sprite2D3" parent="Escenario/Faroles" index="1" unique_id=173037104]
+position = Vector2(928.99994, 275)
+scale = Vector2(0.07360831, 0.092407234)
+
+[node name="Sprite2D4" parent="Escenario/Faroles" index="2" unique_id=2094493952]
+position = Vector2(202, 57.999992)
+scale = Vector2(0.084350586, 0.09045411)
+
+[node name="CollisionShape2D" parent="Escenario/Faroles" index="3" unique_id=1842696286]
+visible = false
+position = Vector2(-174, 56)
+shape = SubResource("RectangleShape2D_im0i0")
+
+[node name="CollisionShape2D2" parent="Escenario/Faroles" index="4" unique_id=302814103]
+visible = false
+position = Vector2(932, 275.625)
+shape = SubResource("RectangleShape2D_igews")
+
+[node name="CollisionShape2D4" parent="Escenario/Faroles" index="5" unique_id=1888845005]
+visible = false
+position = Vector2(203.5, 56)
+shape = SubResource("RectangleShape2D_3jhn4")
+
+[node name="Otrascosas" parent="Escenario" unique_id=1826342237 instance=ExtResource("13_ku3ft")]
+position = Vector2(59, 21)
+
+[node name="Sprite2D3" parent="Escenario/Otrascosas" index="0" unique_id=204924963]
+position = Vector2(1094, 538)
+scale = Vector2(0.11166156, 0.12359258)
+
+[node name="Sprite2D4" parent="Escenario/Otrascosas" index="1" unique_id=265897670]
+position = Vector2(718.00006, 66)
+scale = Vector2(0.10689787, 0.105999745)
+
+[node name="CollisionShape2D2" parent="Escenario/Otrascosas" index="2" unique_id=1940017858]
+visible = false
+position = Vector2(718, 64.5)
+shape = SubResource("RectangleShape2D_2i6rs")
+
+[node name="CollisionShape2D3" parent="Escenario/Otrascosas" index="3" unique_id=138768209]
+visible = false
+position = Vector2(1091, 534)
+shape = SubResource("RectangleShape2D_uqc5p")
 
 [node name="Jugador" parent="." unique_id=358537819 instance=ExtResource("2_wbnfm")]
-position = Vector2(-2, -7)
 
 [node name="HUB" parent="." unique_id=941967587 instance=ExtResource("4_p2ibf")]
 script = ExtResource("5_gr0cm")
+
+[node name="BotonPausa" type="Button" parent="HUB" unique_id=895776828]
+layout_mode = 0
+offset_left = 592.0
+offset_top = 617.0
+offset_right = 698.0
+offset_bottom = 723.0
+icon = ExtResource("17_a7mqa")
+flat = true
+expand_icon = true
+script = ExtResource("18_6hfqe")
 
 [node name="Cronometro" type="Timer" parent="." unique_id=185695287]
 autostart = true
@@ -418,10 +465,13 @@ color = Color(1, 0.21176471, 0.16078432, 0.6156863)
 
 [editable path="Escenario/Fuente"]
 [editable path="Escenario/Marco"]
-[editable path="Escenario/Arbol"]
 [editable path="Escenario/Jardineras"]
 [editable path="Escenario/Bancas"]
 [editable path="Escenario/lamparas"]
 [editable path="Escenario/Tiendas"]
 [editable path="Escenario/basureros"]
 [editable path="Escenario/arboles"]
+[editable path="Escenario/StaticBody2D"]
+[editable path="Escenario/Faroles"]
+[editable path="Escenario/Otrascosas"]
+[editable path="HUB"]

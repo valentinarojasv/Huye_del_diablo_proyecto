@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dcu11tkh3cd34"]
+
+[ext_resource type="Texture2D" uid="uid://cmbfyj3wfnp6x" path="res://assets/escenario/obstaculos/carreta2.png" id="2_405lb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
+size = Vector2(332.5, 209)
+
+[node name="Carreta" type="StaticBody2D" unique_id=142090163]
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1774929772]
+position = Vector2(290, 355)
+scale = Vector2(0.23551434, 0.2626953)
+texture = ExtResource("2_405lb")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=571473598]
+position = Vector2(293.75, 361.5)
+shape = SubResource("RectangleShape2D_f6pym")
