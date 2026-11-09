@@ -18,7 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://cw50icisg62rv" path="res://Scenes/obstaculos/faroles.tscn" id="12_66tbc"]
 [ext_resource type="PackedScene" uid="uid://hweku4y7a3vu" path="res://Scenes/obstaculos/otrascosas.tscn" id="13_ku3ft"]
 [ext_resource type="Texture2D" uid="uid://m0hylhh6435r" path="res://assets/final/botonPausa.png" id="17_a7mqa"]
-[ext_resource type="Script" uid="uid://beluang648sn3" path="res://Scripts/boton_pausa.gd" id="18_6hfqe"]
+[ext_resource type="Texture2D" uid="uid://v0gtgyib0sho" path="res://assets/final/btnturbo.png" id="18_20ejb"]
+[ext_resource type="PackedScene" uid="uid://dsgkrvkgaq6ef" path="res://Scenes/ui/joystick_virtual.tscn" id="19_6hfqe"]
 
 [sub_resource type="TileSet" id="TileSet_dvfph"]
 
@@ -435,14 +436,24 @@ script = ExtResource("5_gr0cm")
 
 [node name="BotonPausa" type="Button" parent="HUB" unique_id=895776828]
 layout_mode = 0
-offset_left = 592.0
+offset_left = 578.0
 offset_top = 617.0
-offset_right = 698.0
-offset_bottom = 723.0
+offset_right = 707.0
+offset_bottom = 742.0
 icon = ExtResource("17_a7mqa")
 flat = true
 expand_icon = true
-script = ExtResource("18_6hfqe")
+
+[node name="BotonTurbo" type="Button" parent="HUB" unique_id=2107108652]
+visible = false
+layout_mode = 0
+offset_left = 976.0
+offset_top = 528.0
+offset_right = 1089.0
+offset_bottom = 647.0
+icon = ExtResource("18_20ejb")
+flat = true
+expand_icon = true
 
 [node name="Cronometro" type="Timer" parent="." unique_id=185695287]
 autostart = true
@@ -462,6 +473,16 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 0.21176471, 0.16078432, 0.6156863)
+
+[node name="JoystickVirtual" parent="." unique_id=1005520669 instance=ExtResource("19_6hfqe")]
+visible = false
+offset_left = 92.0
+offset_top = 477.0
+offset_right = 252.0
+offset_bottom = 637.0
+
+[connection signal="button_down" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_down"]
+[connection signal="direccion_cambiada" from="JoystickVirtual" to="Jugador" method="_on_joystick_virtual_direccion_cambiada"]
 
 [editable path="Escenario/Fuente"]
 [editable path="Escenario/Marco"]

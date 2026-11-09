@@ -1,12 +1,50 @@
 [gd_scene format=3 uid="uid://dsgkrvkgaq6ef"]
 
+[ext_resource type="Script" uid="uid://coygn2v2beuut" path="res://Scripts/joystick_virtual.gd" id="1_2akjb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f6pym"]
+bg_color = Color(0.08627451, 0.15686275, 0.6431373, 0.6313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 80
+corner_radius_top_right = 80
+corner_radius_bottom_right = 80
+corner_radius_bottom_left = 80
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sg33y"]
+bg_color = Color(0.92941177, 0.06666667, 0.14901961, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
 [node name="JoystickVirtual" type="Control" unique_id=1005520669]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 63.0
+offset_top = 514.0
+offset_right = 223.0
+offset_bottom = 674.0
+script = ExtResource("1_2akjb")
 
-[node name="Panel" type="Panel" parent="." unique_id=540954696]
+[node name="Base" type="Panel" parent="." unique_id=1602877148]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 160.0
+offset_bottom = 160.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f6pym")
+
+[node name="Perilla" type="Panel" parent="." unique_id=540954696]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 110.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sg33y")

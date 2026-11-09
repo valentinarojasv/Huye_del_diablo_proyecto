@@ -13,6 +13,9 @@ const ESCENA_FIN_JUEGO: PackedScene = preload(
 const RUTA_MENU_PRINCIPAL: String = "res://Scenes/menu/MenuPrincipal.tscn"
 const RUTA_JUEGO: String = "res://Scenes/game/juego.tscn"
 
+# Musica de la partida.
+const MUSICA_JUEGO: String = "res://audio/game.ogg"
+
 const INTENSIDAD_SACUDIDA: float = 8.0
 const DURACION_SACUDIDA: float = 0.20
 
@@ -21,6 +24,9 @@ const DURACION_SACUDIDA: float = 0.20
 @onready var diablo: CharacterBody2D = $Diablo
 @onready var destello_rojo: ColorRect = $EfectosPantalla/DestelloRojo
 @onready var camara_jugador: Camera2D = $Jugador/CamaraJugador
+
+@onready var boton_pausa: Button = $HUB/BotonPausa
+@onready var boton_turbo: Button = $HUB/BotonTurbo
 
 var tiempo_supervivencia: int = 0
 var partida_terminada: bool = false
@@ -51,7 +57,16 @@ func _ready() -> void:
 	jugador.dano_recibido.connect(_on_jugador_dano_recibido)
 	jugador.jugador_derrotado.connect(_on_jugador_derrotado)
 
+	# Conectar el boton de pausa.
+	boton_pausa.pressed.connect(_on_boton_pausa_pressed)
+
+	# Mostrar el boton TURBO solamente en dispositivos tactiles.
+	boton_turbo.visible = DisplayServer.is_touchscreen_available()
+
 	tiempo_actualizado.emit(tiempo_supervivencia)
+
+	# Iniciar la musica de persecucion.
+	GestorAudio.reproducir_musica(MUSICA_JUEGO)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,6 +76,29 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pausa") and not event.is_echo():
 		cambiar_pausa()
 		get_viewport().set_input_as_handled()
+
+
+# ==========================================
+# BOTON DE PAUSA
+# ==========================================
+
+func _on_boton_pausa_pressed() -> void:
+	cambiar_pausa()
+
+
+# ==========================================
+# BOTON DE TURBO TACTIL
+# ==========================================
+
+func _on_boton_turbo_button_down() -> void:
+	if partida_terminada or partida_pausada:
+		return
+
+	jugador.establecer_turbo_tactil(true)
+
+
+func _on_boton_turbo_button_up() -> void:
+	jugador.establecer_turbo_tactil(false)
 
 
 # ==========================================
@@ -78,6 +116,9 @@ func pausar_partida() -> void:
 	if partida_terminada or partida_pausada:
 		return
 
+	# Desactivar el turbo tactil al pausar.
+	jugador.establecer_turbo_tactil(false)
+
 	menu_pausa = ESCENA_MENU_PAUSA.instantiate() as CanvasLayer
 
 	if menu_pausa == null:
@@ -88,6 +129,9 @@ func pausar_partida() -> void:
 
 	menu_pausa.continuar_solicitado.connect(reanudar_partida)
 	menu_pausa.menu_principal_solicitado.connect(volver_menu_principal)
+
+	# Pausar la musica conservando su posicion.
+	GestorAudio.pausar_musica()
 
 	partida_pausada = true
 	get_tree().paused = true
@@ -104,6 +148,9 @@ func reanudar_partida() -> void:
 		menu_pausa.queue_free()
 
 	menu_pausa = null
+
+	# Continuar la musica desde donde se pauso.
+	GestorAudio.reanudar_musica()
 
 
 # ==========================================
@@ -123,7 +170,14 @@ func cambiar_escena(ruta: String) -> void:
 	get_tree().paused = false
 	partida_pausada = false
 
-	# Eliminar las interfaces creadas mediante código.
+	# Desactivar el turbo tactil.
+	jugador.establecer_turbo_tactil(false)
+
+	# Detener la musica y los efectos de la partida.
+	GestorAudio.detener_musica()
+	GestorAudio.detener_sonido()
+
+	# Eliminar las interfaces creadas mediante codigo.
 	if is_instance_valid(menu_pausa):
 		menu_pausa.queue_free()
 
@@ -141,7 +195,7 @@ func cambiar_escena(ruta: String) -> void:
 
 
 # ==========================================
-# CRONÓMETRO
+# CRONOMETRO
 # ==========================================
 
 func _on_cronometro_timeout() -> void:
@@ -169,13 +223,20 @@ func _on_jugador_derrotado() -> void:
 
 	cronometro.stop()
 
+	# Desactivar el turbo tactil.
+	jugador.establecer_turbo_tactil(false)
+
 	jugador.set_physics_process(false)
 	diablo.set_physics_process(false)
 
 	jugador.velocity = Vector2.ZERO
 	diablo.velocity = Vector2.ZERO
 
-	# Guardar el récord antes de mostrar Game Over.
+	# Detener la musica y los efectos al terminar.
+	GestorAudio.detener_musica()
+	GestorAudio.detener_sonido()
+
+	# Guardar el record antes de mostrar Game Over.
 	GestorRecords.registrar_tiempo(tiempo_supervivencia)
 
 	mostrar_game_over()

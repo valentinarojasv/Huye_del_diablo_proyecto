@@ -9,8 +9,13 @@ var sonidos: Dictionary = {}
 
 var advertencia_activa: bool = false
 
+var musica_pausada: bool = false
+var ruta_musica_actual: String = ""
+
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 	reproductor_efectos = AudioStreamPlayer.new()
 	reproductor_efectos.name = "ReproductorEfectos"
 	add_child(reproductor_efectos)
@@ -37,6 +42,10 @@ func _ready() -> void:
 	registrar_sonido("embestida", "res://audio/embestida.ogg")
 
 
+# ==========================================
+# REGISTRO DE SONIDOS
+# ==========================================
+
 func registrar_sonido(nombre: String, ruta: String) -> void:
 	if not ResourceLoader.exists(ruta):
 		push_warning("No se encontró el sonido: " + ruta)
@@ -44,6 +53,10 @@ func registrar_sonido(nombre: String, ruta: String) -> void:
 
 	sonidos[nombre] = load(ruta)
 
+
+# ==========================================
+# EFECTOS DE SONIDO
+# ==========================================
 
 func reproducir_sonido(nombre: String) -> void:
 	if not sonidos.has(nombre):
@@ -84,18 +97,62 @@ func detener_sonido() -> void:
 	reproductor_embestida.stop()
 
 
+# ==========================================
+# MUSICA DE FONDO
+# ==========================================
+
 func reproducir_musica(ruta: String) -> void:
 	if not ResourceLoader.exists(ruta):
 		push_warning("No se encontró la música: " + ruta)
 		return
 
-	reproductor_musica.stream = load(ruta)
+	# Evitar reiniciar una canción que ya está sonando.
+	if ruta == ruta_musica_actual:
+		if reproductor_musica.playing and not musica_pausada:
+			return
+
+	# Detener la canción anterior.
+	reproductor_musica.stop()
+
+	var nueva_musica: AudioStream = load(ruta) as AudioStream
+
+	if nueva_musica == null:
+		push_warning("No se pudo cargar la música: " + ruta)
+		return
+
+	reproductor_musica.stream = nueva_musica
 	reproductor_musica.play()
+
+	ruta_musica_actual = ruta
+	musica_pausada = false
 
 
 func detener_musica() -> void:
 	reproductor_musica.stop()
 
+	musica_pausada = false
+	ruta_musica_actual = ""
+
+
+# ==========================================
+# PAUSAR Y REANUDAR MUSICA
+# ==========================================
+
+func pausar_musica() -> void:
+	if reproductor_musica.playing and not musica_pausada:
+		reproductor_musica.stream_paused = true
+		musica_pausada = true
+
+
+func reanudar_musica() -> void:
+	if musica_pausada:
+		reproductor_musica.stream_paused = false
+		musica_pausada = false
+
+
+# ==========================================
+# CONTROL DE VOLUMEN
+# ==========================================
 
 func establecer_volumen_efectos(volumen_db: float) -> void:
 	reproductor_efectos.volume_db = volumen_db

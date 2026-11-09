@@ -14,9 +14,15 @@ var turbo_activo: bool = false
 var turbo_bloqueado: bool = false
 var tiempo_sin_turbo: float = 0.0
 
+# Estado del boton tactil de turbo.
+var turbo_tactil_presionado: bool = false
+
 var vidas_actuales: int = 3
 var invulnerable: bool = false
 var tiempo_invulnerabilidad: float = 0.0
+
+# Direccion recibida desde el joystick virtual.
+var direccion_joystick: Vector2 = Vector2.ZERO
 
 const INTERVALO_PARPADEO: float = 0.1
 var tiempo_parpadeo: float = 0.0
@@ -47,6 +53,10 @@ func _physics_process(delta: float) -> void:
 	actualizar_movimiento()
 
 
+# ==========================================
+# INVULNERABILIDAD
+# ==========================================
+
 func actualizar_invulnerabilidad(delta: float) -> void:
 	if not invulnerable:
 		return
@@ -64,9 +74,18 @@ func actualizar_invulnerabilidad(delta: float) -> void:
 		sprite.visible = true
 
 
+# ==========================================
+# SISTEMA DE TURBO
+# ==========================================
+
 func actualizar_turbo(delta: float) -> void:
 	var energia_anterior: float = energia_turbo
-	var turbo_presionado: bool = Input.is_action_pressed("turbo")
+
+	# Permitir activar el turbo con teclado o boton tactil.
+	var turbo_presionado: bool = (
+		Input.is_action_pressed("turbo")
+		or turbo_tactil_presionado
+	)
 
 	turbo_activo = (
 		turbo_presionado
@@ -107,13 +126,35 @@ func actualizar_turbo(delta: float) -> void:
 		)
 
 
+# ==========================================
+# CONTROL DEL TURBO TACTIL
+# ==========================================
+
+func establecer_turbo_tactil(presionado: bool) -> void:
+	turbo_tactil_presionado = presionado
+
+
+# ==========================================
+# MOVIMIENTO DEL JUGADOR
+# ==========================================
+
 func actualizar_movimiento() -> void:
-	var direccion: Vector2 = Input.get_vector(
+	# Movimiento mediante teclado.
+	var direccion_teclado: Vector2 = Input.get_vector(
 		"ui_left",
 		"ui_right",
 		"ui_up",
 		"ui_down"
 	)
+
+	var direccion: Vector2 = direccion_teclado
+
+	# Utilizar el joystick cuando no se presiona el teclado.
+	if direccion_teclado == Vector2.ZERO:
+		direccion = direccion_joystick
+
+	# Evitar que el movimiento diagonal supere la velocidad maxima.
+	direccion = direccion.limit_length(1.0)
 
 	var velocidad_actual: float = configuracion.velocidad_normal
 
@@ -121,8 +162,21 @@ func actualizar_movimiento() -> void:
 		velocidad_actual = configuracion.velocidad_turbo
 
 	velocity = direccion * velocidad_actual
+
 	move_and_slide()
 
+
+# ==========================================
+# CONTROL DEL JOYSTICK VIRTUAL
+# ==========================================
+
+func establecer_direccion_joystick(nueva_direccion: Vector2) -> void:
+	direccion_joystick = nueva_direccion.limit_length(1.0)
+
+
+# ==========================================
+# SISTEMA DE DAÑO
+# ==========================================
 
 func recibir_dano() -> void:
 	if invulnerable or vidas_actuales <= 0:
@@ -143,3 +197,11 @@ func recibir_dano() -> void:
 	invulnerable = true
 	tiempo_invulnerabilidad = configuracion.duracion_invulnerabilidad
 	tiempo_parpadeo = 0.0
+
+
+# ==========================================
+# SEÑAL DEL JOYSTICK VIRTUAL
+# ==========================================
+
+func _on_joystick_virtual_direccion_cambiada(direccion: Vector2) -> void:
+	establecer_direccion_joystick(direccion)
