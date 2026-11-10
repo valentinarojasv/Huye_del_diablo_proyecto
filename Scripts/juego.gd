@@ -13,9 +13,6 @@ const ESCENA_FIN_JUEGO: PackedScene = preload(
 const RUTA_MENU_PRINCIPAL: String = "res://Scenes/menu/MenuPrincipal.tscn"
 const RUTA_JUEGO: String = "res://Scenes/game/juego.tscn"
 
-# Musica de la partida.
-const MUSICA_JUEGO: String = "res://audio/game.ogg"
-
 const INTENSIDAD_SACUDIDA: float = 8.0
 const DURACION_SACUDIDA: float = 0.20
 
@@ -48,7 +45,6 @@ func _ready() -> void:
 
 	get_tree().paused = false
 
-	# Estos nodos deben detenerse durante la pausa.
 	cronometro.process_mode = Node.PROCESS_MODE_PAUSABLE
 	jugador.process_mode = Node.PROCESS_MODE_PAUSABLE
 	diablo.process_mode = Node.PROCESS_MODE_PAUSABLE
@@ -57,17 +53,52 @@ func _ready() -> void:
 	jugador.dano_recibido.connect(_on_jugador_dano_recibido)
 	jugador.jugador_derrotado.connect(_on_jugador_derrotado)
 
-	# Conectar el boton de pausa.
 	boton_pausa.pressed.connect(_on_boton_pausa_pressed)
 
-	# Mostrar el boton TURBO solamente en dispositivos tactiles.
-	boton_turbo.visible = DisplayServer.is_touchscreen_available()
+	# Mostrar TURBO solamente en telefonos y tabletas.
+	boton_turbo.visible = es_dispositivo_movil()
 
 	tiempo_actualizado.emit(tiempo_supervivencia)
 
-	# Iniciar la musica de persecucion.
-	GestorAudio.reproducir_musica(MUSICA_JUEGO)
+	GestorAudio.sonido_gameover_finalizado.connect(
+		_on_sonido_gameover_finalizado
+	)
 
+	GestorAudio.reproducir_musica_partida()
+
+
+# ==========================================
+# DETECCION DE DISPOSITIVO MOVIL
+# ==========================================
+
+func es_dispositivo_movil() -> bool:
+	var sistema: String = OS.get_name()
+
+	if sistema == "Android" or sistema == "iOS":
+		return true
+
+	if sistema == "Web":
+		if not DisplayServer.is_touchscreen_available():
+			return false
+
+		var agente: String = JavaScriptBridge.eval(
+			"navigator.userAgent",
+			true
+		)
+
+		return (
+			"Android" in agente
+			or "iPhone" in agente
+			or "iPad" in agente
+			or "iPod" in agente
+		)
+
+	return false
+
+
+# ==========================================
+# ENTRADA DE TECLADO
+# ==========================================
 
 func _unhandled_input(event: InputEvent) -> void:
 	if partida_terminada:
@@ -106,6 +137,9 @@ func _on_boton_turbo_button_up() -> void:
 # ==========================================
 
 func cambiar_pausa() -> void:
+	if partida_terminada:
+		return
+
 	if partida_pausada:
 		reanudar_partida()
 	else:
@@ -116,7 +150,6 @@ func pausar_partida() -> void:
 	if partida_terminada or partida_pausada:
 		return
 
-	# Desactivar el turbo tactil al pausar.
 	jugador.establecer_turbo_tactil(false)
 
 	menu_pausa = ESCENA_MENU_PAUSA.instantiate() as CanvasLayer
@@ -130,11 +163,10 @@ func pausar_partida() -> void:
 	menu_pausa.continuar_solicitado.connect(reanudar_partida)
 	menu_pausa.menu_principal_solicitado.connect(volver_menu_principal)
 
-	# Pausar la musica conservando su posicion.
-	GestorAudio.pausar_musica()
-
 	partida_pausada = true
 	get_tree().paused = true
+
+	GestorAudio.reproducir_musica_menu()
 
 
 func reanudar_partida() -> void:
@@ -149,8 +181,7 @@ func reanudar_partida() -> void:
 
 	menu_pausa = null
 
-	# Continuar la musica desde donde se pauso.
-	GestorAudio.reanudar_musica()
+	GestorAudio.reproducir_musica_partida()
 
 
 # ==========================================
@@ -166,18 +197,13 @@ func reintentar_partida() -> void:
 
 
 func cambiar_escena(ruta: String) -> void:
-	# Asegurar que la nueva escena no quede pausada.
 	get_tree().paused = false
 	partida_pausada = false
 
-	# Desactivar el turbo tactil.
 	jugador.establecer_turbo_tactil(false)
 
-	# Detener la musica y los efectos de la partida.
-	GestorAudio.detener_musica()
 	GestorAudio.detener_sonido()
 
-	# Eliminar las interfaces creadas mediante codigo.
 	if is_instance_valid(menu_pausa):
 		menu_pausa.queue_free()
 
@@ -187,7 +213,6 @@ func cambiar_escena(ruta: String) -> void:
 	menu_pausa = null
 	fin_juego = null
 
-	# Cambiar de escena.
 	var error: Error = get_tree().change_scene_to_file(ruta)
 
 	if error != OK:
@@ -223,7 +248,6 @@ func _on_jugador_derrotado() -> void:
 
 	cronometro.stop()
 
-	# Desactivar el turbo tactil.
 	jugador.establecer_turbo_tactil(false)
 
 	jugador.set_physics_process(false)
@@ -232,14 +256,22 @@ func _on_jugador_derrotado() -> void:
 	jugador.velocity = Vector2.ZERO
 	diablo.velocity = Vector2.ZERO
 
-	# Detener la musica y los efectos al terminar.
-	GestorAudio.detener_musica()
-	GestorAudio.detener_sonido()
-
-	# Guardar el record antes de mostrar Game Over.
 	GestorRecords.registrar_tiempo(tiempo_supervivencia)
 
+	GestorAudio.reproducir_gameover()
+
+
+# ==========================================
+# FINALIZACION DEL SONIDO DE DERROTA
+# ==========================================
+
+func _on_sonido_gameover_finalizado() -> void:
+	if not partida_terminada:
+		return
+
 	mostrar_game_over()
+
+	GestorAudio.reproducir_musica_menu()
 
 
 # ==========================================
@@ -256,13 +288,10 @@ func mostrar_game_over() -> void:
 		push_error("No se pudo crear la pantalla Game Over.")
 		return
 
-	# Cargar Game Over fuera de la escena Juego.
 	get_tree().root.add_child(fin_juego)
 
-	# Mostrar el tiempo sobrevivido.
 	fin_juego.mostrar_tiempo(tiempo_supervivencia)
 
-	# Conectar los botones.
 	fin_juego.reintentar_solicitado.connect(reintentar_partida)
 	fin_juego.menu_principal_solicitado.connect(volver_menu_principal)
 
@@ -343,6 +372,13 @@ func activar_sacudida_camara() -> void:
 
 func _exit_tree() -> void:
 	get_tree().paused = false
+
+	if GestorAudio.sonido_gameover_finalizado.is_connected(
+		_on_sonido_gameover_finalizado
+	):
+		GestorAudio.sonido_gameover_finalizado.disconnect(
+			_on_sonido_gameover_finalizado
+		)
 
 	if is_instance_valid(menu_pausa):
 		menu_pausa.queue_free()

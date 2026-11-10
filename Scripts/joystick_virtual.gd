@@ -17,11 +17,47 @@ func _ready() -> void:
 	base.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	perilla.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	# Mostrar el joystick solamente en dispositivos tactiles.
-	visible = DisplayServer.is_touchscreen_available()
+	# Mostrar el joystick solamente en telefonos.
+	visible = es_dispositivo_movil()
 
 	centrar_perilla()
 
+
+# ==========================================
+# DETECCION DE DISPOSITIVO MOVIL
+# ==========================================
+
+func es_dispositivo_movil() -> bool:
+	var sistema: String = OS.get_name()
+
+	# Aplicaciones ejecutadas directamente en telefonos.
+	if sistema == "Android" or sistema == "iOS":
+		return true
+
+	# Version web: distinguir telefono de computadora.
+	if sistema == "Web":
+		if not DisplayServer.is_touchscreen_available():
+			return false
+
+		var agente: String = JavaScriptBridge.eval(
+			"navigator.userAgent",
+			true
+		)
+
+		return (
+			"Android" in agente
+			or "iPhone" in agente
+			or "iPad" in agente
+			or "iPod" in agente
+		)
+
+	# Windows, Linux y macOS.
+	return false
+
+
+# ==========================================
+# CONTROL TACTIL
+# ==========================================
 
 func _input(event: InputEvent) -> void:
 	if not visible:
@@ -46,9 +82,17 @@ func _input(event: InputEvent) -> void:
 			actualizar_direccion(arrastre.position)
 
 
+# ==========================================
+# DETECTAR AREA DEL JOYSTICK
+# ==========================================
+
 func _dentro_de_base(posicion_pantalla: Vector2) -> bool:
 	return base.get_global_rect().has_point(posicion_pantalla)
 
+
+# ==========================================
+# ACTUALIZAR DIRECCION
+# ==========================================
 
 func actualizar_direccion(posicion_pantalla: Vector2) -> void:
 	var centro: Vector2 = base.global_position + base.size / 2.0
@@ -72,6 +116,10 @@ func actualizar_direccion(posicion_pantalla: Vector2) -> void:
 	direccion_cambiada.emit(direccion)
 
 
+# ==========================================
+# CENTRAR PERILLA
+# ==========================================
+
 func centrar_perilla() -> void:
 	perilla.position = (
 		base.position
@@ -80,11 +128,19 @@ func centrar_perilla() -> void:
 	)
 
 
+# ==========================================
+# REINICIAR JOYSTICK
+# ==========================================
+
 func reiniciar_joystick() -> void:
 	direccion = Vector2.ZERO
 	centrar_perilla()
 	direccion_cambiada.emit(direccion)
 
+
+# ==========================================
+# OBTENER DIRECCION
+# ==========================================
 
 func obtener_direccion() -> Vector2:
 	return direccion

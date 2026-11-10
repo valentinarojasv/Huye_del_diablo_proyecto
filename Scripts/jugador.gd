@@ -8,6 +8,8 @@ signal jugador_derrotado
 signal dano_recibido
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var polvo_correr: GPUParticles2D = $PolvoCorrer
+@onready var estela_turbo: GPUParticles2D = $EstelaTurbo
 
 var energia_turbo: float = 100.0
 var turbo_activo: bool = false
@@ -25,6 +27,8 @@ var tiempo_invulnerabilidad: float = 0.0
 var direccion_joystick: Vector2 = Vector2.ZERO
 
 const INTERVALO_PARPADEO: float = 0.1
+const VELOCIDAD_MINIMA_POLVO: float = 10.0
+
 var tiempo_parpadeo: float = 0.0
 
 
@@ -39,6 +43,13 @@ func _ready() -> void:
 
 	sprite.visible = true
 
+	# Los efectos comienzan desactivados.
+	polvo_correr.emitting = false
+	estela_turbo.emitting = false
+
+	# El sonido de pasos comienza detenido.
+	GestorAudio.detener_pasos()
+
 	energia_turbo_cambiada.emit(
 		energia_turbo,
 		configuracion.energia_maxima
@@ -51,6 +62,9 @@ func _physics_process(delta: float) -> void:
 	actualizar_invulnerabilidad(delta)
 	actualizar_turbo(delta)
 	actualizar_movimiento()
+	actualizar_polvo()
+	actualizar_estela_turbo()
+	actualizar_sonido_pasos()
 
 
 # ==========================================
@@ -167,6 +181,62 @@ func actualizar_movimiento() -> void:
 
 
 # ==========================================
+# EFECTO DE POLVO AL CORRER
+# ==========================================
+
+func actualizar_polvo() -> void:
+	# Utilizar la velocidad real despues de las colisiones.
+	var velocidad_real: Vector2 = get_real_velocity()
+
+	var jugador_moviendo: bool = (
+		velocidad_real.length() > VELOCIDAD_MINIMA_POLVO
+	)
+
+	# Emitir polvo solamente cuando el jugador se desplaza.
+	polvo_correr.emitting = jugador_moviendo
+
+
+# ==========================================
+# ESTELA DE VELOCIDAD DEL TURBO
+# ==========================================
+
+func actualizar_estela_turbo() -> void:
+	# Comprobar que el jugador realmente se este moviendo.
+	var velocidad_real: Vector2 = get_real_velocity()
+
+	var jugador_moviendo: bool = (
+		velocidad_real.length() > VELOCIDAD_MINIMA_POLVO
+	)
+
+	# La estela aparece solamente durante el turbo.
+	estela_turbo.emitting = (
+		turbo_activo
+		and jugador_moviendo
+	)
+
+
+# ==========================================
+# SONIDO DE PASOS DEL JUGADOR
+# ==========================================
+
+func actualizar_sonido_pasos() -> void:
+	# Obtener la velocidad real despues de las colisiones.
+	var velocidad_real: Vector2 = get_real_velocity()
+
+	var jugador_moviendo: bool = (
+		velocidad_real.length() > VELOCIDAD_MINIMA_POLVO
+	)
+
+	if jugador_moviendo:
+		# GestorAudio evita reiniciar el sonido
+		# cuando ya se esta reproduciendo.
+		GestorAudio.reproducir_pasos()
+	else:
+		# Detener los pasos cuando el jugador se detiene.
+		GestorAudio.detener_pasos()
+
+
+# ==========================================
 # CONTROL DEL JOYSTICK VIRTUAL
 # ==========================================
 
@@ -188,9 +258,17 @@ func recibir_dano() -> void:
 
 	dano_recibido.emit()
 
-	GestorAudio.reproducir_sonido("latigazo")
+	# Reproducir el impacto solamente cuando
+	# el jugador recibe un golpe y pierde una vida.
+	GestorAudio.reproducir_sonido("impacto")
 
 	if vidas_actuales <= 0:
+		polvo_correr.emitting = false
+		estela_turbo.emitting = false
+
+		# Detener los pasos al perder todas las vidas.
+		GestorAudio.detener_pasos()
+
 		jugador_derrotado.emit()
 		return
 

@@ -128,6 +128,11 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 
 		Estado.LATIGAZO:
 			jugador_golpeado_en_ataque = false
+
+			# Reproducir el latigazo cada vez que el diablo ataca,
+			# independientemente de si golpea al jugador.
+			GestorAudio.reproducir_sonido("latigazo")
+
 			colision_latigo.set_deferred("disabled", false)
 
 		Estado.RECUPERAR:
