@@ -2,10 +2,97 @@
 
 [ext_resource type="Script" uid="uid://b601q76ckgmkk" path="res://Scripts/jugador.gd" id="1_gynp0"]
 [ext_resource type="Script" uid="uid://cctpv8jo66iuw" path="res://resources/configuracion_jugador.gd" id="2_xayr5"]
+[ext_resource type="Texture2D" uid="uid://dfwt8dyq57t28" path="res://assets/final/Jugador/caminar_abajo_01.png" id="3_lud34"]
+[ext_resource type="Texture2D" uid="uid://2th2kxmbm6rs" path="res://assets/final/Jugador/caminar_abajo_02.png" id="4_0t3og"]
+[ext_resource type="Texture2D" uid="uid://b4qdefbrr114s" path="res://assets/final/Jugador/caminar_abajo_03.png" id="5_hive3"]
+[ext_resource type="Texture2D" uid="uid://e1a4j6o8p3vp" path="res://assets/final/Jugador/caminar_abajo_04.png" id="6_fduvq"]
+[ext_resource type="Texture2D" uid="uid://dqqlag224xlcm" path="res://assets/final/Jugador/caminar_arriba_01.png" id="7_lud34"]
+[ext_resource type="Texture2D" uid="uid://dclawgww33swj" path="res://assets/final/Jugador/caminar_arriba_02.png" id="8_pebkn"]
+[ext_resource type="Texture2D" uid="uid://cv3ttsmtts6ge" path="res://assets/final/Jugador/caminar_arriba_03.png" id="9_ohbvk"]
+[ext_resource type="Texture2D" uid="uid://ds083xi4pamhh" path="res://assets/final/Jugador/caminar_arriba_04.png" id="10_s51ur"]
+[ext_resource type="Texture2D" uid="uid://cp88w4yqvvxmk" path="res://assets/final/Jugador/caminar_derecha_01.png" id="11_u6sd5"]
+[ext_resource type="Texture2D" uid="uid://bq2sqfllbn50" path="res://assets/final/Jugador/caminar_derecha_02.png" id="12_y2v10"]
+[ext_resource type="Texture2D" uid="uid://cluva3dd34lbk" path="res://assets/final/Jugador/caminar_derecha_03.png" id="13_itgh3"]
+[ext_resource type="Texture2D" uid="uid://cfs37gmy64s2s" path="res://assets/final/Jugador/caminar_derecha_04.png" id="14_fdc8f"]
+[ext_resource type="Texture2D" uid="uid://c5p5cbta2mwsi" path="res://assets/final/Jugador/caminar_izquierda_01.png" id="15_0t3og"]
+[ext_resource type="Texture2D" uid="uid://cm8prcf4tp1t7" path="res://assets/final/Jugador/caminar_izquierda_02.png" id="16_hive3"]
+[ext_resource type="Texture2D" uid="uid://dkvb3hb8d780p" path="res://assets/final/Jugador/caminar_izquierda_03.png" id="17_fduvq"]
+[ext_resource type="Texture2D" uid="uid://dntqbkga0rlgl" path="res://assets/final/Jugador/caminar_izquierda_04.png" id="18_i05cm"]
 
 [sub_resource type="Resource" id="Resource_xfidg"]
 script = ExtResource("2_xayr5")
 metadata/_custom_type_script = "uid://cctpv8jo66iuw"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f6pym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_lud34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0t3og")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hive3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fduvq")
+}],
+"loop": 1,
+"name": &"caminar_abajo",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_lud34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pebkn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ohbvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_s51ur")
+}],
+"loop": 1,
+"name": &"caminar_arriba",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_u6sd5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_y2v10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_itgh3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_fdc8f")
+}],
+"loop": 1,
+"name": &"caminar_derecha",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_0t3og")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hive3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_fduvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_i05cm")
+}],
+"loop": 1,
+"name": &"caminar_izquierda",
+"speed": 6.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sg33y"]
 radius = 16.0
@@ -34,9 +121,14 @@ position = Vector2(640, 110)
 script = ExtResource("1_gynp0")
 configuracion = SubResource("Resource_xfidg")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2093107038]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1443624499]
+position = Vector2(-2, -5)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_f6pym")
+animation = &"caminar_izquierda"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1566444826]
+visible = false
 shape = SubResource("CircleShape2D_sg33y")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=121451303]

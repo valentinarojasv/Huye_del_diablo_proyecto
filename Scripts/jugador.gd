@@ -7,7 +7,7 @@ signal vidas_cambiadas(vidas_actuales: int)
 signal jugador_derrotado
 signal dano_recibido
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $Sprite2D
 @onready var polvo_correr: GPUParticles2D = $PolvoCorrer
 @onready var estela_turbo: GPUParticles2D = $EstelaTurbo
 
@@ -26,6 +26,9 @@ var tiempo_invulnerabilidad: float = 0.0
 # Direccion recibida desde el joystick virtual.
 var direccion_joystick: Vector2 = Vector2.ZERO
 
+# Ultima direccion hacia la que mira el campesino.
+var ultima_animacion: StringName = &"caminar_abajo"
+
 const INTERVALO_PARPADEO: float = 0.1
 const VELOCIDAD_MINIMA_POLVO: float = 10.0
 
@@ -42,6 +45,11 @@ func _ready() -> void:
 	vidas_actuales = configuracion.vidas_iniciales
 
 	sprite.visible = true
+
+	# Mostrar al campesino mirando hacia abajo al iniciar.
+	sprite.play(ultima_animacion)
+	sprite.stop()
+	sprite.frame = 0
 
 	# Los efectos comienzan desactivados.
 	polvo_correr.emitting = false
@@ -62,6 +70,7 @@ func _physics_process(delta: float) -> void:
 	actualizar_invulnerabilidad(delta)
 	actualizar_turbo(delta)
 	actualizar_movimiento()
+	actualizar_animacion()
 	actualizar_polvo()
 	actualizar_estela_turbo()
 	actualizar_sonido_pasos()
@@ -178,6 +187,43 @@ func actualizar_movimiento() -> void:
 	velocity = direccion * velocidad_actual
 
 	move_and_slide()
+
+
+# ==========================================
+# ANIMACIONES DEL CAMPESINO
+# ==========================================
+
+func actualizar_animacion() -> void:
+	# Obtener el movimiento real del personaje.
+	var direccion: Vector2 = get_real_velocity()
+
+	# Detener la animacion cuando el campesino esta quieto.
+	if direccion.length() <= VELOCIDAD_MINIMA_POLVO:
+		sprite.stop()
+		return
+
+	var nueva_animacion: StringName
+
+	# Seleccionar una de las cuatro direcciones.
+	if absf(direccion.x) > absf(direccion.y):
+		if direccion.x > 0.0:
+			nueva_animacion = &"caminar_derecha"
+		else:
+			nueva_animacion = &"caminar_izquierda"
+	else:
+		if direccion.y > 0.0:
+			nueva_animacion = &"caminar_abajo"
+		else:
+			nueva_animacion = &"caminar_arriba"
+
+	# Cambiar de animacion solamente cuando cambia la direccion.
+	if nueva_animacion != ultima_animacion:
+		ultima_animacion = nueva_animacion
+		sprite.play(ultima_animacion)
+
+	# Reanudar la animacion al volver a caminar.
+	elif not sprite.is_playing():
+		sprite.play(ultima_animacion)
 
 
 # ==========================================

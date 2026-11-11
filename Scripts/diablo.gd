@@ -11,9 +11,11 @@ enum Estado {
 	EMBESTIR
 }
 
+@onready var sprite: AnimatedSprite2D = $Sprite2D
 @onready var agente_navegacion: NavigationAgent2D = $NavigationAgent2D
 @onready var latigo: Area2D = $Latigo
 @onready var colision_latigo: CollisionShape2D = $Latigo/CollisionShape2D
+@onready var sprite_latigo: AnimatedSprite2D = $Latigo/SpriteLatigo
 @onready var advertencia_ataque: Polygon2D = $AdvertenciaAtaque
 @onready var advertencia_embestida: Polygon2D = $AdvertenciaEmbestida
 @onready var estela_embestida: GPUParticles2D = $EstelaEmbestida
@@ -27,6 +29,11 @@ const DURACION_EMBESTIDA: float = 0.6
 const VELOCIDAD_EMBESTIDA: float = 650.0
 
 const TIEMPO_EXTRA_ADVERTENCIA: float = 3.0
+const VELOCIDAD_MINIMA_ANIMACION: float = 10.0
+
+# Configuracion de la sacudida durante la advertencia.
+const AMPLITUD_SACUDIDA: float = 3.0
+const FRECUENCIA_SACUDIDA: float = 35.0
 
 var jugador: CharacterBody2D
 var tiempo_partida: float = 0.0
@@ -43,6 +50,12 @@ var direccion_embestida: Vector2 = Vector2.RIGHT
 var jugador_en_zona_advertencia: bool = false
 var advertencia_sonando: bool = false
 var tiempo_fuera_advertencia: float = 0.0
+
+# Ultima direccion hacia la que mira el diablo.
+var ultima_animacion: StringName = &"caminar_abajo"
+
+# Posicion original del sprite.
+var posicion_original_sprite: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -66,6 +79,19 @@ func _ready() -> void:
 	advertencia_embestida.visible = false
 	estela_embestida.emitting = false
 
+	# Mostrar el latigo en reposo desde el inicio.
+	sprite_latigo.visible = true
+	sprite_latigo.play(&"reposo")
+
+	# Guardar la posicion original del sprite.
+	posicion_original_sprite = sprite.position
+
+	# Mostrar al diablo mirando hacia abajo al iniciar.
+	sprite.visible = true
+	sprite.play(ultima_animacion)
+	sprite.stop()
+	sprite.frame = 0
+
 
 func _physics_process(delta: float) -> void:
 	tiempo_partida += delta
@@ -73,9 +99,16 @@ func _physics_process(delta: float) -> void:
 
 	if not is_instance_valid(jugador):
 		velocity = Vector2.ZERO
+		sprite.stop()
+		sprite.position = posicion_original_sprite
+
+		sprite_latigo.play(&"reposo")
+		colision_latigo.set_deferred("disabled", true)
+
 		advertencia_ataque.visible = false
 		advertencia_embestida.visible = false
 		estela_embestida.emitting = false
+
 		detener_advertencia()
 		return
 
@@ -98,8 +131,14 @@ func _physics_process(delta: float) -> void:
 		Estado.EMBESTIR:
 			actualizar_embestida()
 
+	actualizar_animacion()
+	actualizar_sacudida_advertencia()
 	actualizar_sonido_advertencia(delta)
 
+
+# ==========================================
+# CAMBIO DE ESTADO
+# ==========================================
 
 func cambiar_estado(nuevo_estado: Estado) -> void:
 	estado_actual = nuevo_estado
@@ -110,9 +149,18 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 	advertencia_embestida.visible = false
 	estela_embestida.emitting = false
 
+	# Mantener el latigo visible.
+	sprite_latigo.visible = true
+
+	# Desactivar la colision fuera del ataque.
+	colision_latigo.set_deferred("disabled", true)
+
+	# Restaurar la posicion visual al cambiar de estado.
+	sprite.position = posicion_original_sprite
+
 	match nuevo_estado:
 		Estado.PERSEGUIR:
-			pass
+			sprite_latigo.play(&"reposo")
 
 		Estado.ANUNCIAR:
 			direccion_ataque = global_position.direction_to(
@@ -126,17 +174,26 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 			advertencia_ataque.rotation = direccion_ataque.angle()
 			advertencia_ataque.visible = true
 
+			orientar_sprite(direccion_ataque)
+			sprite.stop()
+
+			sprite_latigo.play(&"reposo")
+
 		Estado.LATIGAZO:
 			jugador_golpeado_en_ataque = false
 
-			# Reproducir el latigazo cada vez que el diablo ataca,
-			# independientemente de si golpea al jugador.
+			# Reproducir los fotogramas del ataque.
+			sprite_latigo.play(&"latigazo")
+
+			# Sonido del latigo.
 			GestorAudio.reproducir_sonido("latigazo")
 
+			# Activar la colision durante el ataque.
 			colision_latigo.set_deferred("disabled", false)
 
 		Estado.RECUPERAR:
-			colision_latigo.set_deferred("disabled", true)
+			# Volver al latigo en reposo.
+			sprite_latigo.play(&"reposo")
 
 		Estado.PREPARAR_EMBESTIDA:
 			direccion_embestida = global_position.direction_to(
@@ -149,7 +206,12 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 			advertencia_embestida.rotation = direccion_embestida.angle()
 			advertencia_embestida.visible = true
 
+			orientar_sprite(direccion_embestida)
+			sprite.stop()
+
 			detener_advertencia()
+
+			sprite_latigo.play(&"reposo")
 
 		Estado.EMBESTIR:
 			tiempo_ultima_embestida = tiempo_partida
@@ -158,6 +220,12 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 			detener_advertencia()
 			GestorAudio.reproducir_sonido("embestida")
 
+			sprite_latigo.play(&"reposo")
+
+
+# ==========================================
+# PERSECUCION
+# ==========================================
 
 func actualizar_persecucion() -> void:
 	if puede_embestir():
@@ -191,12 +259,89 @@ func actualizar_persecucion() -> void:
 	move_and_slide()
 
 
+# ==========================================
+# ANIMACIONES DEL DIABLO
+# ==========================================
+
+func actualizar_animacion() -> void:
+	match estado_actual:
+		Estado.PERSEGUIR:
+			var direccion: Vector2 = get_real_velocity()
+
+			if direccion.length() <= VELOCIDAD_MINIMA_ANIMACION:
+				sprite.stop()
+				return
+
+			orientar_sprite(direccion)
+
+			if not sprite.is_playing():
+				sprite.play(ultima_animacion)
+
+		Estado.EMBESTIR:
+			orientar_sprite(direccion_embestida)
+
+			if not sprite.is_playing():
+				sprite.play(ultima_animacion)
+
+		_:
+			sprite.stop()
+
+
+func orientar_sprite(direccion: Vector2) -> void:
+	if direccion == Vector2.ZERO:
+		return
+
+	var nueva_animacion: StringName
+
+	if absf(direccion.x) > absf(direccion.y):
+		if direccion.x > 0.0:
+			nueva_animacion = &"caminar_derecha"
+		else:
+			nueva_animacion = &"caminar_izquierda"
+	else:
+		if direccion.y > 0.0:
+			nueva_animacion = &"caminar_abajo"
+		else:
+			nueva_animacion = &"caminar_arriba"
+
+	if nueva_animacion != ultima_animacion:
+		ultima_animacion = nueva_animacion
+		sprite.play(ultima_animacion)
+
+
+# ==========================================
+# SACUDIDA VISUAL DE ADVERTENCIA
+# ==========================================
+
+func actualizar_sacudida_advertencia() -> void:
+	if estado_actual == Estado.ANUNCIAR:
+		var desplazamiento: float = (
+			sin(tiempo_estado * FRECUENCIA_SACUDIDA)
+			* AMPLITUD_SACUDIDA
+		)
+
+		sprite.position = (
+			posicion_original_sprite
+			+ Vector2(desplazamiento, 0.0)
+		)
+	else:
+		sprite.position = posicion_original_sprite
+
+
+# ==========================================
+# ANUNCIO DEL ATAQUE
+# ==========================================
+
 func actualizar_anuncio() -> void:
 	velocity = Vector2.ZERO
 
 	if tiempo_estado >= obtener_tiempo_aviso():
 		cambiar_estado(Estado.LATIGAZO)
 
+
+# ==========================================
+# SONIDO DE ADVERTENCIA
+# ==========================================
 
 func actualizar_sonido_advertencia(delta: float) -> void:
 	var dentro_zona: bool = false
@@ -239,6 +384,10 @@ func detener_advertencia() -> void:
 	tiempo_fuera_advertencia = 0.0
 
 
+# ==========================================
+# LATIGAZO
+# ==========================================
+
 func actualizar_latigazo() -> void:
 	velocity = Vector2.ZERO
 
@@ -246,12 +395,20 @@ func actualizar_latigazo() -> void:
 		cambiar_estado(Estado.RECUPERAR)
 
 
+# ==========================================
+# RECUPERACION
+# ==========================================
+
 func actualizar_recuperacion() -> void:
 	velocity = Vector2.ZERO
 
 	if tiempo_estado >= obtener_tiempo_recuperacion():
 		cambiar_estado(Estado.PERSEGUIR)
 
+
+# ==========================================
+# EMBESTIDA
+# ==========================================
 
 func puede_embestir() -> bool:
 	if tiempo_partida < TIEMPO_ACTIVACION_EMBESTIDA:
@@ -277,6 +434,10 @@ func actualizar_embestida() -> void:
 	if tiempo_estado >= DURACION_EMBESTIDA:
 		cambiar_estado(Estado.RECUPERAR)
 
+
+# ==========================================
+# CONFIGURACION DE DIFICULTAD
+# ==========================================
 
 func obtener_velocidad_actual() -> float:
 	if tiempo_partida < 15.0:
@@ -310,6 +471,10 @@ func obtener_tiempo_recuperacion() -> float:
 
 	return configuracion.recuperacion_final
 
+
+# ==========================================
+# COLISION DEL LATIGO
+# ==========================================
 
 func _on_latigo_body_entered(body: Node2D) -> void:
 	if estado_actual != Estado.LATIGAZO:

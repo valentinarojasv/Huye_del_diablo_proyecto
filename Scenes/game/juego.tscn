@@ -495,4 +495,5 @@ offset_bottom = 637.0
 [editable path="Escenario/StaticBody2D"]
 [editable path="Escenario/Faroles"]
 [editable path="Escenario/Otrascosas"]
+[editable path="Jugador"]
 [editable path="HUB"]

@@ -2,12 +2,128 @@
 
 [ext_resource type="Script" uid="uid://dl2arrndccp54" path="res://Scripts/diablo.gd" id="1_238n2"]
 [ext_resource type="Resource" uid="uid://c85nxrr61vysi" path="res://resources/configuracion_diablo.tres" id="2_oc3nh"]
+[ext_resource type="Texture2D" uid="uid://7cu6c3mkdf02" path="res://assets/final/Diablo/caminar_abajo_01.png" id="3_eqjfu"]
+[ext_resource type="Texture2D" uid="uid://fep2d0llvb4q" path="res://assets/final/Diablo/caminar_abajo_02.png" id="4_mm856"]
+[ext_resource type="Texture2D" uid="uid://p6byqivk6yox" path="res://assets/final/Diablo/caminar_abajo_03.png" id="5_wak1r"]
+[ext_resource type="Texture2D" uid="uid://cgsp4dkbc6ncv" path="res://assets/final/Diablo/caminar_abajo_04.png" id="6_qli7i"]
+[ext_resource type="Texture2D" uid="uid://cfwuep8b7s7fw" path="res://assets/final/Diablo/caminar_arriba_01.png" id="7_j0qub"]
+[ext_resource type="Texture2D" uid="uid://c0s5t3urg5dls" path="res://assets/final/Diablo/caminar_arriba_02.png" id="8_mt0l8"]
+[ext_resource type="Texture2D" uid="uid://bg86aq6dps142" path="res://assets/final/Diablo/caminar_arriba_03.png" id="9_kpiaq"]
+[ext_resource type="Texture2D" uid="uid://daqjycjcg2mxf" path="res://assets/final/Diablo/caminar_arriba_04.png" id="10_580uu"]
+[ext_resource type="Texture2D" uid="uid://c0a61s1acpkvu" path="res://assets/final/Diablo/caminar_derecha_01.png" id="11_oqn35"]
+[ext_resource type="Texture2D" uid="uid://cf1x2le2me08y" path="res://assets/final/Diablo/caminar_derecha_02.png" id="12_5bk0s"]
+[ext_resource type="Texture2D" uid="uid://c57sbn4bpwwm5" path="res://assets/final/Diablo/caminar_derecha_03.png" id="13_5otyb"]
+[ext_resource type="Texture2D" uid="uid://m7r1go020dtc" path="res://assets/final/Diablo/caminar_derecha_04.png" id="14_5i4op"]
+[ext_resource type="Texture2D" uid="uid://daqiblmp42nb8" path="res://assets/final/Diablo/caminar_izquierda_01.png" id="15_ld4qj"]
+[ext_resource type="Texture2D" uid="uid://c5gwx45cywnv5" path="res://assets/final/Diablo/caminar_izquierda_02.png" id="16_57g3u"]
+[ext_resource type="Texture2D" uid="uid://dcsaqgw7h80px" path="res://assets/final/Diablo/caminar_izquierda_03.png" id="17_nty0v"]
+[ext_resource type="Texture2D" uid="uid://52ud0ijkb72x" path="res://assets/final/Diablo/caminar_izquierda_04.png" id="18_iyj16"]
+[ext_resource type="Texture2D" uid="uid://jxvmddd0mkui" path="res://assets/final/Latigo/latigo_01.png" id="19_j0qub"]
+[ext_resource type="Texture2D" uid="uid://dsvosymaeuuka" path="res://assets/final/Latigo/latigo_02.png" id="20_mt0l8"]
+[ext_resource type="Texture2D" uid="uid://berntr805tvcr" path="res://assets/final/Latigo/latigo_03.png" id="21_kpiaq"]
+[ext_resource type="Texture2D" uid="uid://6dcti2c20c6l" path="res://assets/final/Latigo/latigo_04.png" id="22_580uu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f6pym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_eqjfu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mm856")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_wak1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qli7i")
+}],
+"loop": 1,
+"name": &"caminar_abajo",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_j0qub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mt0l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_kpiaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_580uu")
+}],
+"loop": 1,
+"name": &"caminar_arriba",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_oqn35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_5bk0s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5otyb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_5i4op")
+}],
+"loop": 1,
+"name": &"caminar_derecha",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_ld4qj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_57g3u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_nty0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_iyj16")
+}],
+"loop": 1,
+"name": &"caminar_izquierda",
+"speed": 6.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f6pym"]
 radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f6pym"]
 size = Vector2(80, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sg33y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_mt0l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_kpiaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_580uu")
+}],
+"loop": 0,
+"name": &"latigazo",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_j0qub")
+}],
+"loop": 0,
+"name": &"reposo",
+"speed": 1.0
+}]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ma3lj"]
 emission_shape = 1
@@ -23,9 +139,13 @@ color = Color(0, 0.51510525, 0.96733445, 1)
 script = ExtResource("1_238n2")
 configuracion = ExtResource("2_oc3nh")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=457149770]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1511946853]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_f6pym")
+animation = &"caminar_izquierda"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1230592265]
+visible = false
 shape = SubResource("CircleShape2D_f6pym")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=254794997]
@@ -40,6 +160,12 @@ radius = 16.0
 position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_f6pym")
 disabled = true
+
+[node name="SpriteLatigo" type="AnimatedSprite2D" parent="Latigo" unique_id=1977038573]
+position = Vector2(4, 0)
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_sg33y")
+animation = &"latigazo"
 
 [node name="AdvertenciaAtaque" type="Polygon2D" parent="." unique_id=913873604]
 visible = false
