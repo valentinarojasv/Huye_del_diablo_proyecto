@@ -125,6 +125,17 @@ size = Vector2(116, 131)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uqc5p"]
 size = Vector2(116, 144)
 
+[sub_resource type="Gradient" id="Gradient_1k5o2"]
+offsets = PackedFloat32Array(0, 0.03773585, 0.4716981, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.6132075, 0.6132075, 0.6132075, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f6pym"]
+gradient = SubResource("Gradient_1k5o2")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.4764706, 0.4764706)
+
 [node name="Juego" type="Node2D" unique_id=1304233476]
 script = ExtResource("1_dvfph")
 
@@ -230,7 +241,7 @@ position = Vector2(436.14063, 566.8828)
 scale = Vector2(0.09260501, 0.122023)
 
 [node name="Banca5" parent="Escenario/Bancas" index="4" unique_id=657431965]
-position = Vector2(167.00002, 141)
+position = Vector2(169.00002, 151.99998)
 scale = Vector2(0.09824196, 0.12765995)
 
 [node name="Banca6" parent="Escenario/Bancas" index="5" unique_id=1444567268]
@@ -263,7 +274,7 @@ shape = SubResource("RectangleShape2D_2qyif")
 
 [node name="CollisionShape2D5" parent="Escenario/Bancas" index="11" unique_id=520437618]
 visible = false
-position = Vector2(167.25, 143)
+position = Vector2(169, 155)
 shape = SubResource("RectangleShape2D_lwand")
 
 [node name="CollisionShape2D6" parent="Escenario/Bancas" index="12" unique_id=1875205277]
@@ -382,6 +393,7 @@ shape = SubResource("RectangleShape2D_qlykq")
 position = Vector2(269, 75)
 
 [node name="Sprite2D" parent="Escenario/Faroles" index="0" unique_id=872633863]
+visible = false
 position = Vector2(-175.00002, 51.000004)
 scale = Vector2(0.09313965, 0.08982341)
 
@@ -434,6 +446,32 @@ shape = SubResource("RectangleShape2D_uqc5p")
 [node name="HUB" parent="." unique_id=941967587 instance=ExtResource("4_p2ibf")]
 script = ExtResource("5_gr0cm")
 
+[node name="BarraTurbo" parent="HUB" index="0" unique_id=736219764]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 79.0
+offset_top = 86.0
+offset_right = 256.0
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContenedorCorazones" parent="HUB" index="1" unique_id=1085246264]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 48.0
+offset_right = 232.0
+offset_bottom = 88.0
+
+[node name="PanelTiempo" parent="HUB" index="2" unique_id=134957982]
+offset_left = 594.0
+offset_top = 9.0
+offset_right = 722.0
+offset_bottom = 48.0
+scale = Vector2(0.8, 0.8)
+
 [node name="BotonPausa" type="Button" parent="HUB" unique_id=895776828]
 layout_mode = 0
 offset_left = 578.0
@@ -480,6 +518,16 @@ offset_left = 92.0
 offset_top = 477.0
 offset_right = 252.0
 offset_bottom = 637.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2058969316]
+color = Color(0.46666667, 0.4392157, 0.5019608, 1)
+
+[node name="LuzFarol1" type="PointLight2D" parent="." unique_id=691634964]
+position = Vector2(661.0001, 352.00003)
+scale = Vector2(1.6992189, 0.98567706)
+color = Color(1, 0.7019608, 0.2784314, 1)
+texture = SubResource("GradientTexture2D_f6pym")
+texture_scale = 1.5
 
 [connection signal="button_down" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_down"]
 [connection signal="direccion_cambiada" from="JoystickVirtual" to="Jugador" method="_on_joystick_virtual_direccion_cambiada"]

@@ -1,6 +1,42 @@
 [gd_scene format=3 uid="uid://kgfo670vpa1o"]
 
 [ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="1_w4rgr"]
+[ext_resource type="Texture2D" uid="uid://d1mgug0jmktes" path="res://assets/final/corazon_Rojo.png" id="2_6xenu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20ejb"]
+bg_color = Color(0.16078432, 0.13725491, 0.1764706, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12328897, 0.18997031, 0.7089499, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w102m"]
+bg_color = Color(0.061417185, 0.10462684, 0.4523713, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5vr0"]
+content_margin_left = 15.0
+content_margin_top = 8.0
+content_margin_right = 15.0
+content_margin_bottom = 8.0
+bg_color = Color(0.16078432, 0.13725491, 0.1764706, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12156863, 0.1882353, 0.70980394, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="HUB" type="Control" unique_id=941967587]
 layout_mode = 3
@@ -10,28 +46,59 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="IndicadorVidas" type="Label" parent="." unique_id=1456036554]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 90.0
-offset_bottom = 43.0
-theme_override_fonts/font = ExtResource("1_w4rgr")
-text = "VIDAS: 3"
-
-[node name="IndicadorTiempo" type="Label" parent="." unique_id=944331117]
-layout_mode = 0
-offset_left = 582.0
-offset_top = 43.0
-offset_right = 669.0
-offset_bottom = 66.0
-theme_override_fonts/font = ExtResource("1_w4rgr")
-text = "TIEMPO: 0 S"
-
 [node name="BarraTurbo" type="ProgressBar" parent="." unique_id=736219764]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 65.0
 offset_right = 250.0
 offset_bottom = 92.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_20ejb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_w102m")
 value = 100.0
+
+[node name="ContenedorCorazones" type="HBoxContainer" parent="." unique_id=1085246264]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 148.0
+offset_bottom = 55.0
+
+[node name="Corazon1" type="TextureRect" parent="ContenedorCorazones" unique_id=486531571]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_6xenu")
+expand_mode = 1
+
+[node name="Corazon2" type="TextureRect" parent="ContenedorCorazones" unique_id=1994042215]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_6xenu")
+expand_mode = 1
+
+[node name="Corazon3" type="TextureRect" parent="ContenedorCorazones" unique_id=697103141]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_6xenu")
+expand_mode = 1
+
+[node name="PanelTiempo" type="PanelContainer" parent="." unique_id=134957982]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.0
+offset_top = 20.0
+offset_right = 65.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_j5vr0")
+
+[node name="IndicadorTiempo" type="Label" parent="PanelTiempo" unique_id=944331117]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_w4rgr")
+theme_override_font_sizes/font_size = 18
+text = "TIEMPO: 0 S"
+horizontal_alignment = 1
+vertical_alignment = 1
