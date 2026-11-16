@@ -11,12 +11,11 @@ El objetivo es sobrevivir el mayor tiempo posible mientras un diablo persigue al
 - **Resolución:** 1280 × 720
 - **Género:** Supervivencia y persecución 2D
 - **Plataforma objetivo:** Web y dispositivos móviles
-- **Estado:** En desarrollo
-- **Última actualización:** 12 de noviembre de 2026
+- **Estado:** Etapa final de entrega
 
-## Controles actuales
+## Controles
 
-| **Acción** | **Control** |
+| Acción | Control |
 | --- | --- |
 | Movimiento | WASD o flechas |
 | Turbo | Shift o espacio |
@@ -26,95 +25,133 @@ El objetivo es sobrevivir el mayor tiempo posible mientras un diablo persigue al
 
 ## Funcionalidades implementadas
 
-- Menú principal con botón JUGAR.
-- Movimiento del jugador en ocho direcciones.
-- Sistema de turbo con consumo y regeneración de energía.
-- HUD con corazones, energía de Turbo y tiempo de supervivencia.
-- Sistema de tres vidas representadas mediante corazones rojos.
-- Cambio de corazones rojos a grises al perder vidas.
+### Jugador
+
+- Movimiento en ocho direcciones.
+- Sistema de Turbo con consumo y regeneración de energía.
+- Tres vidas representadas mediante corazones.
+- Cambio de corazones rojos a grises al recibir daño.
 - Invulnerabilidad temporal después de recibir daño.
-- Persecución del diablo mediante NavigationAgent2D.
+- Animaciones de movimiento.
+- Efectos visuales de desplazamiento y Turbo.
+- Sonidos de pasos.
+
+### Diablo
+
+- Persecución del jugador mediante NavigationAgent2D.
+- Navegación alrededor de los obstáculos del escenario.
 - Sistema de ataques con látigo.
-- Animación del látigo con estados de reposo y ataque.
-- Configuración de la colisión del látigo durante los ataques.
+- Animaciones de reposo y ataque del látigo.
+- Activación de la colisión del látigo durante los ataques.
 - Advertencia visual antes de cada ataque.
 - Sonidos de advertencia y latigazo.
-- Incremento progresivo de la dificultad.
-- Embestida especial del diablo a partir de los 45 segundos.
-- Destello rojo al recibir daño.
-- Sacudida de cámara.
-- Finalización de la partida al perder todas las vidas.
-- Pantalla Game Over con tiempo de supervivencia.
-- Sistema de mejor tiempo de supervivencia.
-- Recursos editables para configurar los valores del jugador y del diablo.
-- Escenario ambientado en una plaza tradicional costarricense.
+- Cuatro fases de dificultad progresiva.
+- Embestida especial a partir de los 45 segundos.
+
+### Interfaz
+
+- Menú principal con botón JUGAR.
+- HUD con tres corazones, barra de Turbo y cronómetro.
+- Contador de tiempo con panel decorativo.
+- Barra de Turbo con fondo oscuro y relleno turquesa.
+- Pantalla Game Over.
+- Registro del mejor tiempo de supervivencia.
+- Botón de pausa.
+- Joystick virtual para dispositivos táctiles.
+- Botón táctil de Turbo.
+
+### Escenario
+
+- Plaza inspirada en las localidades tradicionales de Costa Rica.
 - Fuente central y caminos peatonales.
-- Incorporación de árboles, jardineras y elementos decorativos.
-- Incorporación de bancas y faroles.
-- Incorporación de tiendas y puestos comerciales.
-- Configuración de colisiones en los obstáculos del escenario.
-- Implementación de límites para el movimiento del jugador.
-- Configuración de NavigationRegion2D para la navegación del diablo.
-- Incorporación de gráficos definitivos del jugador y del diablo.
-- Incorporación de gráficos definitivos del látigo.
-- Incorporación de gráficos definitivos de los obstáculos y del suelo de la plaza.
+- Árboles, jardineras y elementos decorativos.
+- Bancas y faroles.
+- Tiendas y puestos comerciales.
+- Obstáculos con colisiones.
+- Límites de movimiento.
+- Gráficos definitivos del jugador, diablo, látigo y escenario.
 - Ambientación nocturna mediante CanvasModulate.
-- Iluminación cálida de la plaza mediante PointLight2D.
-- Rediseño del HUD con una combinación de colores oscuros y turquesa.
-- Contador de tiempo con panel decorativo y texto de 18 píxeles.
-- Barra de Turbo con fondo oscuro, relleno turquesa y bordes redondeados.
-- Implementación del joystick virtual.
-- Configuración de visibilidad del joystick para dispositivos táctiles.
-- Incorporación del botón táctil de Turbo.
-- Configuración del tamaño de los controles táctiles.
-- Incorporación de la imagen del botón de pausa en el HUD.
-- Organización de escenas, scripts, recursos gráficos y archivos de audio.
+- Iluminación cálida mediante PointLight2D.
 
-## Funcionalidades pendientes
+### Configuración técnica
 
-- Confirmar el funcionamiento de los controles táctiles durante las pruebas de exportación.
-- Confirmar la compatibilidad de los controles móviles.
-- Completar la configuración de exportación Web utilizando el renderizador Compatibility.
-- Generar la versión Web del videojuego.
-- Preparar los archivos de distribución del proyecto.
-- Realizar pruebas de compatibilidad y rendimiento en Google Chrome.
-- Comprobar que el juego mantenga un rendimiento estable de 60 FPS.
-- Completar la documentación y los archivos de entrega.
-- Corregir los problemas de navegación que provocan que el diablo se atasque ocasionalmente con los obstáculos.
+- Recursos editables para los parámetros del jugador y del diablo.
+- Organización de escenas, scripts, gráficos y audio.
+- Renderizador Compatibility.
+- Exportación Web mediante Godot 4.x.
+- Ejecución del videojuego en Google Chrome.
+- Configuración de controles táctiles.
 
 ## Estructura del proyecto
 
 - `Scenes/`: Escenas del menú, juego, personajes, obstáculos e interfaces.
 - `Scripts/`: Código GDScript.
 - `resources/`: Configuraciones editables del jugador y del diablo.
-- `assets/`: Recursos gráficos definitivos del videojuego.
+- `assets/`: Recursos gráficos del videojuego.
 - `audio/`: Archivos de sonido.
-- `autoload/`: Sistemas globales del juego.
-- `README.md`: Documentación general del proyecto.
+- `autoload/`: Sistemas globales.
+- `Built_web/`: Archivos generados para la versión Web.
+- `README.md`: Documentación general.
+- `project.godot`: Archivo principal del proyecto Godot.
 
-## Cómo ejecutar el proyecto
+## Cómo ejecutar el proyecto en Godot
 
 1. Descargar o clonar el repositorio.
 2. Abrir Godot 4.x.
 3. Importar el archivo `project.godot`.
 4. Ejecutar el proyecto desde el editor.
 
-## Estado actual
+## Cómo ejecutar la versión Web
 
-El juego cuenta con los sistemas principales de movimiento, turbo, persecución, ataques, vidas, cronómetro y puntuación.
+La versión Web se encuentra en la carpeta `Built_web`.
 
-Se ha completado la integración de los gráficos definitivos del jugador, el diablo, el látigo y los elementos del escenario. La plaza está inspirada en una localidad tradicional costarricense y cuenta con fuente central, caminos, bancas, árboles, jardineras, faroles y establecimientos comerciales.
+Para ejecutarla:
 
-Durante la tercera semana de desarrollo se mejoró la ambientación visual mediante una iluminación nocturna con tonos cálidos. Se incorporó CanvasModulate para oscurecer el escenario y PointLight2D para generar iluminación amarilla alrededor de los elementos de la plaza.
+1. Utilizar un servidor HTTP local o un servicio de alojamiento Web compatible.
+2. Servir los archivos contenidos en `Built_web`.
+3. Abrir `index.html` desde Google Chrome mediante la dirección del servidor.
 
-También se completó el rediseño del HUD. El indicador de vidas fue sustituido por tres corazones que cambian de rojo a gris cuando el jugador recibe daño. El contador de tiempo y la barra de Turbo recibieron un nuevo diseño con fondos oscuros, bordes redondeados y colores turquesa.
+**Importante:** no se recomienda abrir `index.html` directamente mediante una dirección `file:///`, porque los navegadores pueden restringir la carga de los archivos necesarios para ejecutar Godot.
 
-El diablo cuenta con animaciones de movimiento y ataque, además de un látigo animado cuya colisión se activa durante el golpe. Se mantienen las cuatro fases de dificultad, los avisos de ataque y la embestida especial.
+## Configuración editable
 
-Los parámetros del jugador y del diablo se encuentran organizados mediante recursos editables, permitiendo modificar velocidades, energía, tiempos de advertencia y recuperación desde el Inspector de Godot.
+El videojuego utiliza recursos personalizados para modificar sus parámetros sin necesidad de editar directamente los scripts.
 
-Los controles táctiles ya se encuentran configurados y su funcionamiento se confirmará durante las pruebas de exportación Web.
+Entre los valores configurables se encuentran:
 
-Actualmente, el proyecto se encuentra en la etapa de preparación para la exportación. Las siguientes actividades estarán enfocadas en configurar el renderizador Compatibility, generar la versión Web, verificar el rendimiento en Chrome y preparar los archivos de entrega.
+- Velocidad normal del jugador.
+- Velocidad durante el Turbo.
+- Energía máxima del Turbo.
+- Consumo y regeneración de energía.
+- Cantidad inicial de vidas.
+- Duración de la invulnerabilidad.
+- Velocidad del diablo.
+- Tiempos de advertencia.
+- Duración de los ataques.
+- Tiempos de recuperación.
 
-Finalmente, queda pendiente corregir los problemas ocasionales de navegación que provocan que el diablo se atasque al rodear determinados obstáculos.
+## Estado actual del proyecto
+
+El videojuego cuenta con los sistemas principales de movimiento, Turbo, persecución, ataques, vidas, cronómetro y registro del mejor tiempo de supervivencia.
+
+Se completó la integración de los gráficos definitivos y la ambientación nocturna de la plaza, incluyendo iluminación cálida, obstáculos y elementos decorativos.
+
+También se finalizó el rediseño del HUD, incorporando corazones para representar las vidas y una barra de energía con colores turquesa.
+
+El diablo utiliza NavigationAgent2D para perseguir al jugador y desplazarse alrededor de los obstáculos del escenario.
+
+El proyecto utiliza el renderizador Compatibility y cuenta con una versión Web exportada y ejecutada en Google Chrome.
+
+Los controles táctiles se encuentran configurados, incluyendo un joystick virtual y un botón de Turbo.
+
+## Actividades finales
+
+- Preparar el archivo ZIP de distribución Web.
+- Organizar los archivos de entrega.
+- Corregir cualquier incidencia detectada durante las últimas pruebas.
+
+## Observaciones
+
+Durante las pruebas en Chrome se detectó un comportamiento irregular de la barra de energía del Turbo, que debe revisarse antes de considerar validada completamente la versión final.
+
+El objetivo de rendimiento del proyecto es mantener 60 FPS estables en Google Chrome.
