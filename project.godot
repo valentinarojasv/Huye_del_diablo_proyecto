@@ -13,7 +13,7 @@ config_version=5
 config/name="Huye del Diablo"
 run/main_scene="uid://cms1celj4430"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bitkgke4cfojw"
 
 [autoload]
 

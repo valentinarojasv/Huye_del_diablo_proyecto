@@ -31,9 +31,14 @@ const VELOCIDAD_EMBESTIDA: float = 650.0
 const TIEMPO_EXTRA_ADVERTENCIA: float = 3.0
 const VELOCIDAD_MINIMA_ANIMACION: float = 10.0
 
-# Configuracion de la sacudida durante la advertencia.
 const AMPLITUD_SACUDIDA: float = 3.0
 const FRECUENCIA_SACUDIDA: float = 35.0
+
+# Distancia maxima para considerar alcanzado el destino.
+const DISTANCIA_DESTINO: float = 20.0
+
+# Margen para comprobar que el jugador es alcanzable.
+const MARGEN_DESTINO_NAVEGACION: float = 24.0
 
 var jugador: CharacterBody2D
 var tiempo_partida: float = 0.0
@@ -51,10 +56,7 @@ var jugador_en_zona_advertencia: bool = false
 var advertencia_sonando: bool = false
 var tiempo_fuera_advertencia: float = 0.0
 
-# Ultima direccion hacia la que mira el diablo.
 var ultima_animacion: StringName = &"caminar_abajo"
-
-# Posicion original del sprite.
 var posicion_original_sprite: Vector2 = Vector2.ZERO
 
 
@@ -67,26 +69,27 @@ func _ready() -> void:
 	jugador = get_tree().get_first_node_in_group("jugador") as CharacterBody2D
 
 	if jugador == null:
-		push_error("Diablo: no se encontró al jugador en el grupo 'jugador'.")
+		push_error("Diablo: no se encontro al jugador en el grupo 'jugador'.")
 		set_physics_process(false)
 		return
 
-	agente_navegacion.path_desired_distance = 4.0
-	agente_navegacion.target_desired_distance = 16.0
+	agente_navegacion.path_desired_distance = 16.0
+	agente_navegacion.target_desired_distance = DISTANCIA_DESTINO
+
+	# El movimiento se controla directamente mediante move_and_slide().
+	# No utilizamos velocity_computed.
+	agente_navegacion.avoidance_enabled = false
 
 	colision_latigo.disabled = true
 	advertencia_ataque.visible = false
 	advertencia_embestida.visible = false
 	estela_embestida.emitting = false
 
-	# Mostrar el latigo en reposo desde el inicio.
 	sprite_latigo.visible = true
 	sprite_latigo.play(&"reposo")
 
-	# Guardar la posicion original del sprite.
 	posicion_original_sprite = sprite.position
 
-	# Mostrar al diablo mirando hacia abajo al iniciar.
 	sprite.visible = true
 	sprite.play(ultima_animacion)
 	sprite.stop()
@@ -149,13 +152,9 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 	advertencia_embestida.visible = false
 	estela_embestida.emitting = false
 
-	# Mantener el latigo visible.
 	sprite_latigo.visible = true
-
-	# Desactivar la colision fuera del ataque.
 	colision_latigo.set_deferred("disabled", true)
 
-	# Restaurar la posicion visual al cambiar de estado.
 	sprite.position = posicion_original_sprite
 
 	match nuevo_estado:
@@ -182,17 +181,12 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 		Estado.LATIGAZO:
 			jugador_golpeado_en_ataque = false
 
-			# Reproducir los fotogramas del ataque.
 			sprite_latigo.play(&"latigazo")
-
-			# Sonido del latigo.
 			GestorAudio.reproducir_sonido("latigazo")
 
-			# Activar la colision durante el ataque.
 			colision_latigo.set_deferred("disabled", false)
 
 		Estado.RECUPERAR:
-			# Volver al latigo en reposo.
 			sprite_latigo.play(&"reposo")
 
 		Estado.PREPARAR_EMBESTIDA:
@@ -210,7 +204,6 @@ func cambiar_estado(nuevo_estado: Estado) -> void:
 			sprite.stop()
 
 			detener_advertencia()
-
 			sprite_latigo.play(&"reposo")
 
 		Estado.EMBESTIR:
@@ -236,27 +229,83 @@ func actualizar_persecucion() -> void:
 		jugador.global_position
 	)
 
-	if distancia <= DISTANCIA_ATAQUE:
-		cambiar_estado(Estado.ANUNCIAR)
-		return
-
+	# Actualizar primero el destino para calcular la ruta vigente.
 	agente_navegacion.target_position = jugador.global_position
 
-	if agente_navegacion.is_navigation_finished():
-		velocity = Vector2.ZERO
-		move_and_slide()
-		return
-
+	# Consultar el siguiente punto actualiza el estado de navegacion.
 	var siguiente_posicion: Vector2 = (
 		agente_navegacion.get_next_path_position()
 	)
 
+	# Atacar solamente si el jugador esta cerca y existe
+	# una trayectoria directa sin obstaculos fisicos.
+	if distancia <= DISTANCIA_ATAQUE:
+		if tiene_linea_directa_al_jugador():
+			cambiar_estado(Estado.ANUNCIAR)
+			return
+
+	# Si la ruta termino, comprobar la distancia real.
+	# Evitar avanzar directamente contra una pared.
+	if agente_navegacion.is_navigation_finished():
+		if distancia <= DISTANCIA_DESTINO:
+			velocity = Vector2.ZERO
+			move_and_slide()
+			return
+
+		if tiene_linea_directa_al_jugador():
+			velocity = (
+				global_position.direction_to(jugador.global_position)
+				* obtener_velocidad_actual()
+			)
+			move_and_slide()
+			return
+
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
+	# Seguir el siguiente punto del camino calculado.
 	var direccion: Vector2 = global_position.direction_to(
 		siguiente_posicion
 	)
 
-	velocity = direccion * obtener_velocidad_actual()
+	if direccion == Vector2.ZERO:
+		velocity = Vector2.ZERO
+	else:
+		velocity = direccion * obtener_velocidad_actual()
+
 	move_and_slide()
+
+
+# ==========================================
+# COMPROBACION DE OBSTACULOS
+# ==========================================
+
+func tiene_linea_directa_al_jugador() -> bool:
+	if not is_instance_valid(jugador):
+		return false
+
+	var consulta := PhysicsRayQueryParameters2D.create(
+		global_position,
+		jugador.global_position
+	)
+
+	# Ignorar el propio cuerpo del diablo.
+	consulta.exclude = [get_rid()]
+
+	# Utilizar las capas fisicas configuradas en el juego.
+	consulta.collision_mask = 0xFFFFFFFF
+
+	var resultado: Dictionary = (
+		get_world_2d().direct_space_state.intersect_ray(consulta)
+	)
+
+	if resultado.is_empty():
+		return true
+
+	# Si el primer cuerpo detectado es el jugador,
+	# no existe un obstaculo entre ambos.
+	return resultado.get("collider") == jugador
 
 
 # ==========================================
