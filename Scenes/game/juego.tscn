@@ -530,6 +530,7 @@ texture = SubResource("GradientTexture2D_f6pym")
 texture_scale = 1.5
 
 [connection signal="button_down" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_down"]
+[connection signal="button_up" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_up"]
 [connection signal="direccion_cambiada" from="JoystickVirtual" to="Jugador" method="_on_joystick_virtual_direccion_cambiada"]
 
 [editable path="Escenario/Fuente"]

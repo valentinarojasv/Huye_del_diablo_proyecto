@@ -58,6 +58,25 @@ func _ready() -> void:
 	# Mostrar TURBO solamente en telefonos y tabletas.
 	boton_turbo.visible = es_dispositivo_movil()
 
+	# Configurar el boton Turbo para mantener presionado.
+	boton_turbo.toggle_mode = false
+	boton_turbo.keep_pressed_outside = false
+
+	# Conectar las señales solamente si no estan conectadas.
+	if not boton_turbo.button_down.is_connected(
+		_on_boton_turbo_button_down
+	):
+		boton_turbo.button_down.connect(
+			_on_boton_turbo_button_down
+		)
+
+	if not boton_turbo.button_up.is_connected(
+		_on_boton_turbo_button_up
+	):
+		boton_turbo.button_up.connect(
+			_on_boton_turbo_button_up
+		)
+
 	tiempo_actualizado.emit(tiempo_supervivencia)
 
 	GestorAudio.sonido_gameover_finalizado.connect(

@@ -136,6 +136,8 @@ shape = SubResource("CircleShape2D_sg33y")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=959985640]
 
 [node name="CamaraJugador" type="Camera2D" parent="." unique_id=1873883296]
+visible = false
+zoom = Vector2(1.7, 1.7)
 limit_left = 0
 limit_top = 0
 limit_right = 1280
