@@ -18,7 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://cw50icisg62rv" path="res://Scenes/obstaculos/faroles.tscn" id="12_66tbc"]
 [ext_resource type="PackedScene" uid="uid://hweku4y7a3vu" path="res://Scenes/obstaculos/otrascosas.tscn" id="13_ku3ft"]
 [ext_resource type="Texture2D" uid="uid://m0hylhh6435r" path="res://assets/final/botonPausa.png" id="17_a7mqa"]
-[ext_resource type="Texture2D" uid="uid://v0gtgyib0sho" path="res://assets/final/btnturbo.png" id="18_20ejb"]
 [ext_resource type="PackedScene" uid="uid://dsgkrvkgaq6ef" path="res://Scenes/ui/joystick_virtual.tscn" id="19_6hfqe"]
 
 [sub_resource type="TileSet" id="TileSet_dvfph"]
@@ -443,56 +442,6 @@ shape = SubResource("RectangleShape2D_uqc5p")
 
 [node name="Jugador" parent="." unique_id=358537819 instance=ExtResource("2_wbnfm")]
 
-[node name="HUB" parent="." unique_id=941967587 instance=ExtResource("4_p2ibf")]
-script = ExtResource("5_gr0cm")
-
-[node name="BarraTurbo" parent="HUB" index="0" unique_id=736219764]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 79.0
-offset_top = 86.0
-offset_right = 256.0
-offset_bottom = 113.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ContenedorCorazones" parent="HUB" index="1" unique_id=1085246264]
-layout_mode = 1
-offset_left = 100.0
-offset_top = 48.0
-offset_right = 232.0
-offset_bottom = 88.0
-
-[node name="PanelTiempo" parent="HUB" index="2" unique_id=134957982]
-offset_left = 594.0
-offset_top = 9.0
-offset_right = 722.0
-offset_bottom = 48.0
-scale = Vector2(0.8, 0.8)
-
-[node name="BotonPausa" type="Button" parent="HUB" unique_id=895776828]
-layout_mode = 0
-offset_left = 578.0
-offset_top = 617.0
-offset_right = 707.0
-offset_bottom = 742.0
-icon = ExtResource("17_a7mqa")
-flat = true
-expand_icon = true
-
-[node name="BotonTurbo" type="Button" parent="HUB" unique_id=2107108652]
-visible = false
-layout_mode = 0
-offset_left = 976.0
-offset_top = 528.0
-offset_right = 1089.0
-offset_bottom = 647.0
-icon = ExtResource("18_20ejb")
-flat = true
-expand_icon = true
-
 [node name="Cronometro" type="Timer" parent="." unique_id=185695287]
 autostart = true
 
@@ -512,13 +461,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 0.21176471, 0.16078432, 0.6156863)
 
-[node name="JoystickVirtual" parent="." unique_id=1005520669 instance=ExtResource("19_6hfqe")]
-visible = false
-offset_left = 92.0
-offset_top = 477.0
-offset_right = 252.0
-offset_bottom = 637.0
-
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2058969316]
 color = Color(0.46666667, 0.4392157, 0.5019608, 1)
 
@@ -529,9 +471,59 @@ color = Color(1, 0.7019608, 0.2784314, 1)
 texture = SubResource("GradientTexture2D_f6pym")
 texture_scale = 1.5
 
-[connection signal="button_down" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_down"]
-[connection signal="button_up" from="HUB/BotonTurbo" to="." method="_on_boton_turbo_button_up"]
-[connection signal="direccion_cambiada" from="JoystickVirtual" to="Jugador" method="_on_joystick_virtual_direccion_cambiada"]
+[node name="ControlesMoviles" type="CanvasLayer" parent="." unique_id=1554959206]
+
+[node name="JoystickVirtual" parent="ControlesMoviles" unique_id=1005520669 instance=ExtResource("19_6hfqe")]
+visible = false
+offset_left = 92.0
+offset_top = 477.0
+offset_right = 252.0
+offset_bottom = 637.0
+
+[node name="HUB" parent="ControlesMoviles" unique_id=941967587 instance=ExtResource("4_p2ibf")]
+script = ExtResource("5_gr0cm")
+
+[node name="BarraTurbo" parent="ControlesMoviles/HUB" index="0" unique_id=736219764]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 86.0
+offset_right = -1030.0
+offset_bottom = -607.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContenedorCorazones" parent="ControlesMoviles/HUB" index="1" unique_id=1085246264]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 48.0
+offset_right = 232.0
+offset_bottom = 88.0
+
+[node name="PanelTiempo" parent="ControlesMoviles/HUB" index="2" unique_id=134957982]
+offset_left = -51.0
+offset_top = 25.000002
+offset_right = 77.0
+offset_bottom = 64.00001
+scale = Vector2(0.8, 0.8)
+
+[node name="BotonTurbo" parent="ControlesMoviles/HUB" index="3" unique_id=1684239874]
+visible = false
+action_mode = 0
+
+[node name="BotonPausa" type="Button" parent="ControlesMoviles/HUB" unique_id=895776828]
+layout_mode = 0
+offset_left = 578.0
+offset_top = 617.0
+offset_right = 707.0
+offset_bottom = 742.0
+icon = ExtResource("17_a7mqa")
+flat = true
+expand_icon = true
+
+[connection signal="direccion_cambiada" from="ControlesMoviles/JoystickVirtual" to="Jugador" method="_on_joystick_virtual_direccion_cambiada"]
 
 [editable path="Escenario/Fuente"]
 [editable path="Escenario/Marco"]
@@ -545,4 +537,4 @@ texture_scale = 1.5
 [editable path="Escenario/Faroles"]
 [editable path="Escenario/Otrascosas"]
 [editable path="Jugador"]
-[editable path="HUB"]
+[editable path="ControlesMoviles/HUB"]

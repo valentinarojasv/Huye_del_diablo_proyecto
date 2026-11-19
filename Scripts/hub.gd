@@ -12,26 +12,37 @@ extends Control
 
 
 func _ready() -> void:
-	var juego: Node2D = get_parent()
-	var jugador: CharacterBody2D = juego.get_node("Jugador")
+	# HUB ahora esta dentro de ControlesMoviles.
+	# Subimos dos niveles para encontrar Juego.
+	var juego: Node2D = get_parent().get_parent() as Node2D
 
+	# Jugador sigue siendo hijo directo de Juego.
+	var jugador: CharacterBody2D = juego.get_node("Jugador") as CharacterBody2D
+
+	# Conectar la energia del Turbo.
 	jugador.energia_turbo_cambiada.connect(
 		_actualizar_barra_turbo
 	)
 
+	# Conectar las vidas del jugador.
 	jugador.vidas_cambiadas.connect(
 		_actualizar_vidas
 	)
 
+	# Mostrar la energia inicial.
 	if jugador.configuracion != null:
 		_actualizar_barra_turbo(
 			jugador.energia_turbo,
 			jugador.configuracion.energia_maxima
 		)
 
+	# Mostrar las vidas iniciales.
 	_actualizar_vidas(jugador.vidas_actuales)
 
+	# Conectar el cronometro.
 	juego.tiempo_actualizado.connect(_actualizar_tiempo)
+
+	# Mostrar el tiempo inicial.
 	_actualizar_tiempo(juego.tiempo_supervivencia)
 
 

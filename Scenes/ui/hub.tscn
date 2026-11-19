@@ -2,6 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://cj82hvc7g1hc8" path="res://assets/final/fonts/PatuaOne-Regular.ttf" id="1_w4rgr"]
 [ext_resource type="Texture2D" uid="uid://d1mgug0jmktes" path="res://assets/final/corazon_Rojo.png" id="2_6xenu"]
+[ext_resource type="Texture2D" uid="uid://v0gtgyib0sho" path="res://assets/final/btnturbo.png" id="3_j5vr0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20ejb"]
 bg_color = Color(0.16078432, 0.13725491, 0.1764706, 1)
@@ -102,3 +103,13 @@ theme_override_font_sizes/font_size = 18
 text = "TIEMPO: 0 S"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BotonTurbo" type="Button" parent="." unique_id=1684239874]
+layout_mode = 0
+offset_left = 984.0
+offset_top = 512.0
+offset_right = 1095.0
+offset_bottom = 621.0
+icon = ExtResource("3_j5vr0")
+flat = true
+expand_icon = true

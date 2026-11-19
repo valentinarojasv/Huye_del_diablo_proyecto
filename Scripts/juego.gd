@@ -22,8 +22,9 @@ const DURACION_SACUDIDA: float = 0.20
 @onready var destello_rojo: ColorRect = $EfectosPantalla/DestelloRojo
 @onready var camara_jugador: Camera2D = $Jugador/CamaraJugador
 
-@onready var boton_pausa: Button = $HUB/BotonPausa
-@onready var boton_turbo: Button = $HUB/BotonTurbo
+# Rutas actualizadas para el CanvasLayer.
+@onready var boton_pausa: Button = $ControlesMoviles/HUB/BotonPausa
+@onready var boton_turbo: Button = $ControlesMoviles/HUB/BotonTurbo
 
 var tiempo_supervivencia: int = 0
 var partida_terminada: bool = false
@@ -35,6 +36,9 @@ var fin_juego: CanvasLayer = null
 var animacion_destello: Tween
 var animacion_sacudida: Tween
 
+# Dedo que controla exclusivamente el Turbo.
+var dedo_turbo: int = -1
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -42,6 +46,7 @@ func _ready() -> void:
 	tiempo_supervivencia = 0
 	partida_terminada = false
 	partida_pausada = false
+	dedo_turbo = -1
 
 	get_tree().paused = false
 
@@ -55,27 +60,19 @@ func _ready() -> void:
 
 	boton_pausa.pressed.connect(_on_boton_pausa_pressed)
 
-	# Mostrar TURBO solamente en telefonos y tabletas.
+	# Mostrar Turbo solamente en dispositivos moviles.
 	boton_turbo.visible = es_dispositivo_movil()
 
-	# Configurar el boton Turbo para mantener presionado.
+	# El Button no debe funcionar como interruptor.
 	boton_turbo.toggle_mode = false
 	boton_turbo.keep_pressed_outside = false
 
-	# Conectar las señales solamente si no estan conectadas.
-	if not boton_turbo.button_down.is_connected(
-		_on_boton_turbo_button_down
-	):
-		boton_turbo.button_down.connect(
-			_on_boton_turbo_button_down
-		)
+	# La entrada tactil se controla mediante _input().
+	# El Button no debe consumir los toques del joystick.
+	boton_turbo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	if not boton_turbo.button_up.is_connected(
-		_on_boton_turbo_button_up
-	):
-		boton_turbo.button_up.connect(
-			_on_boton_turbo_button_up
-		)
+	# Reiniciar Turbo al comenzar la partida.
+	jugador.establecer_turbo_tactil(false)
 
 	tiempo_actualizado.emit(tiempo_supervivencia)
 
@@ -116,6 +113,70 @@ func es_dispositivo_movil() -> bool:
 
 
 # ==========================================
+# CONTROL TACTIL DEL TURBO
+# ==========================================
+
+func _input(event: InputEvent) -> void:
+	if not boton_turbo.visible:
+		return
+
+	if partida_terminada or partida_pausada:
+		return
+
+	if event is InputEventScreenTouch:
+		var toque: InputEventScreenTouch = event
+
+		if toque.pressed:
+			# Solamente aceptar un dedo que comience
+			# dentro del area del boton Turbo.
+			if dedo_turbo == -1:
+				if punto_dentro_boton_turbo(toque.position):
+					dedo_turbo = toque.index
+					jugador.establecer_turbo_tactil(true)
+
+		else:
+			# Desactivar Turbo al levantar el mismo dedo.
+			# Los eventos del joystick no afectan Turbo.
+			if toque.index == dedo_turbo:
+				desactivar_turbo_tactil()
+
+	elif event is InputEventScreenDrag:
+		var arrastre: InputEventScreenDrag = event
+
+		# Ignorar los movimientos de otros dedos.
+		if arrastre.index != dedo_turbo:
+			return
+
+		# Si el dedo sale del boton, desactivar Turbo.
+		if not punto_dentro_boton_turbo(arrastre.position):
+			desactivar_turbo_tactil()
+
+
+func punto_dentro_boton_turbo(
+	posicion_pantalla: Vector2
+) -> bool:
+	# Convertir la posicion de pantalla al espacio
+	# local del boton para respetar su transformacion.
+	var posicion_local: Vector2 = (
+		boton_turbo.get_global_transform_with_canvas()
+		.affine_inverse()
+		* posicion_pantalla
+	)
+
+	return Rect2(
+		Vector2.ZERO,
+		boton_turbo.size
+	).has_point(posicion_local)
+
+
+func desactivar_turbo_tactil() -> void:
+	dedo_turbo = -1
+
+	if is_instance_valid(jugador):
+		jugador.establecer_turbo_tactil(false)
+
+
+# ==========================================
 # ENTRADA DE TECLADO
 # ==========================================
 
@@ -137,21 +198,6 @@ func _on_boton_pausa_pressed() -> void:
 
 
 # ==========================================
-# BOTON DE TURBO TACTIL
-# ==========================================
-
-func _on_boton_turbo_button_down() -> void:
-	if partida_terminada or partida_pausada:
-		return
-
-	jugador.establecer_turbo_tactil(true)
-
-
-func _on_boton_turbo_button_up() -> void:
-	jugador.establecer_turbo_tactil(false)
-
-
-# ==========================================
 # SISTEMA DE PAUSA
 # ==========================================
 
@@ -169,12 +215,12 @@ func pausar_partida() -> void:
 	if partida_terminada or partida_pausada:
 		return
 
-	jugador.establecer_turbo_tactil(false)
+	desactivar_turbo_tactil()
 
 	menu_pausa = ESCENA_MENU_PAUSA.instantiate() as CanvasLayer
 
 	if menu_pausa == null:
-		push_error("No se pudo crear el menú de pausa.")
+		push_error("No se pudo crear el menu de pausa.")
 		return
 
 	get_tree().root.add_child(menu_pausa)
@@ -194,6 +240,8 @@ func reanudar_partida() -> void:
 
 	get_tree().paused = false
 	partida_pausada = false
+
+	desactivar_turbo_tactil()
 
 	if is_instance_valid(menu_pausa):
 		menu_pausa.queue_free()
@@ -219,7 +267,7 @@ func cambiar_escena(ruta: String) -> void:
 	get_tree().paused = false
 	partida_pausada = false
 
-	jugador.establecer_turbo_tactil(false)
+	desactivar_turbo_tactil()
 
 	GestorAudio.detener_sonido()
 
@@ -267,7 +315,7 @@ func _on_jugador_derrotado() -> void:
 
 	cronometro.stop()
 
-	jugador.establecer_turbo_tactil(false)
+	desactivar_turbo_tactil()
 
 	jugador.set_physics_process(false)
 	diablo.set_physics_process(false)
@@ -389,8 +437,15 @@ func activar_sacudida_camara() -> void:
 	)
 
 
+# ==========================================
+# LIMPIEZA AL SALIR DE LA ESCENA
+# ==========================================
+
 func _exit_tree() -> void:
 	get_tree().paused = false
+
+	if is_instance_valid(jugador):
+		desactivar_turbo_tactil()
 
 	if GestorAudio.sonido_gameover_finalizado.is_connected(
 		_on_sonido_gameover_finalizado
