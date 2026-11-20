@@ -22,12 +22,6 @@ enum Estado {
 
 const DISTANCIA_ATAQUE: float = 85.0
 
-const TIEMPO_ACTIVACION_EMBESTIDA: float = 45.0
-const INTERVALO_EMBESTIDA: float = 10.0
-const DURACION_PREPARACION_EMBESTIDA: float = 0.8
-const DURACION_EMBESTIDA: float = 0.6
-const VELOCIDAD_EMBESTIDA: float = 650.0
-
 const TIEMPO_EXTRA_ADVERTENCIA: float = 3.0
 const VELOCIDAD_MINIMA_ANIMACION: float = 10.0
 
@@ -460,10 +454,10 @@ func actualizar_recuperacion() -> void:
 # ==========================================
 
 func puede_embestir() -> bool:
-	if tiempo_partida < TIEMPO_ACTIVACION_EMBESTIDA:
+	if tiempo_partida < configuracion.tiempo_activacion_embestida:
 		return false
 
-	if tiempo_partida - tiempo_ultima_embestida < INTERVALO_EMBESTIDA:
+	if tiempo_partida - tiempo_ultima_embestida < configuracion.intervalo_embestida:
 		return false
 
 	return true
@@ -472,15 +466,15 @@ func puede_embestir() -> bool:
 func actualizar_preparacion_embestida() -> void:
 	velocity = Vector2.ZERO
 
-	if tiempo_estado >= DURACION_PREPARACION_EMBESTIDA:
+	if tiempo_estado >= configuracion.duracion_preparacion_embestida:
 		cambiar_estado(Estado.EMBESTIR)
 
 
 func actualizar_embestida() -> void:
-	velocity = direccion_embestida * VELOCIDAD_EMBESTIDA
+	velocity = direccion_embestida * configuracion.velocidad_embestida
 	move_and_slide()
 
-	if tiempo_estado >= DURACION_EMBESTIDA:
+	if tiempo_estado >= configuracion.duracion_embestida:
 		cambiar_estado(Estado.RECUPERAR)
 
 

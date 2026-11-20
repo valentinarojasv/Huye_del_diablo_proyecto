@@ -511,6 +511,8 @@ scale = Vector2(0.8, 0.8)
 
 [node name="BotonTurbo" parent="ControlesMoviles/HUB" index="3" unique_id=1684239874]
 visible = false
+offset_left = 947.0
+offset_top = 475.0
 action_mode = 0
 
 [node name="BotonPausa" type="Button" parent="ControlesMoviles/HUB" unique_id=895776828]

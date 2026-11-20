@@ -21,3 +21,10 @@ class_name ConfiguracionDiablo
 @export var duracion_latigazo: float = 0.15
 @export var recuperacion_inicial: float = 0.70
 @export var recuperacion_final: float = 0.40
+
+@export_group("Embestida")
+@export var tiempo_activacion_embestida: float = 45.0
+@export var intervalo_embestida: float = 10.0
+@export var duracion_preparacion_embestida: float = 0.8
+@export var duracion_embestida: float = 0.6
+@export var velocidad_embestida: float = 650.0
